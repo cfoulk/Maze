@@ -1,11 +1,12 @@
 #canvas {
-    width: 500px;
-    height: 500px;
-    border: 5px solid black;
+    width: 1000px;
+    height: 600px;
+    /*border: 5px solid black;*/
     position: relative;
     box-sizing: content-box;
+    margin:auto;
 }
 
-#visted {
+#wall {
     background-color: black;
 }

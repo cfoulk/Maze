@@ -1,13 +1,27 @@
+let ROWS = 30;
+let COLS = 50;
+let PIXEL = 20;
+
+class Node {
+  constructor(row, col, isStart, isEnd, isWall) {
+    this.row = row;
+    this.col = col;
+    this.isStart = isStart;
+    this.isEnd = isEnd;
+    this.isWall = isWall;
+  }
+}
+
 let canvas = document.getElementById("canvas");
 
-let ROWS = 50;
-let COLS = 50;
-let PIXEL = 10;
-
+let grid = [];
 function createCanvas() {
   for (let i = 0; i < ROWS; i++) {
+    const currRow = [];
     for (let j = 0; j < COLS; j++) {
       let pix = document.createElement("div");
+      pix.setAttribute("id", "node-" + i + "-" + j);
+      pix.classList.add("cell");
       pix.style.position = "absolute";
       pix.style.border = "1px solid red";
       pix.style.left = j * PIXEL + "px";
@@ -15,8 +29,12 @@ function createCanvas() {
       pix.style.width = PIXEL + "px";
       pix.style.height = PIXEL + "px";
       canvas.appendChild(pix);
+      console.log(new Node(i, j, false, false, false));
+      currRow.push(new Node(i, j, false, false, false));
     }
+    console.log(currRow.toString());
+    grid.push[currRow];
   }
 }
-
 createCanvas();
+//console.log(grid.toString);
