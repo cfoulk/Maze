@@ -14,6 +14,11 @@ class Node {
 
 let canvas = document.getElementById("canvas");
 
+function setWall(e) {
+  e.preventDefault();
+  console.log("lol");
+}
+
 let grid = [];
 function createCanvas() {
   for (let i = 0; i < ROWS; i++) {
@@ -29,12 +34,21 @@ function createCanvas() {
       pix.style.width = PIXEL + "px";
       pix.style.height = PIXEL + "px";
       canvas.appendChild(pix);
-      console.log(new Node(i, j, false, false, false));
+      //console.log(new Node(i, j, false, false, false));
       currRow.push(new Node(i, j, false, false, false));
     }
-    console.log(currRow.toString());
+    //console.log(currRow.toString());
     grid.push[currRow];
   }
 }
+
 createCanvas();
 //console.log(grid.toString);
+
+const nodeSelector = [...document.querySelectorAll(".cell")];
+for (const nodes of nodeSelector) {
+  nodes.addEventListener("click", (event) => {
+    console.log("lol " + event.target.id);
+    event.target.classList.add("wall");
+  });
+}
