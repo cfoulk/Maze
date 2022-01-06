@@ -1,6 +1,7 @@
 let ROWS = 30;
 let COLS = 50;
 let PIXEL = 20;
+let currentSetting = "WALL";
 
 class Node {
   constructor(row, col, isStart, isEnd, isWall) {
@@ -14,11 +15,6 @@ class Node {
 
 let canvas = document.getElementById("canvas");
 
-function setWall(e) {
-  e.preventDefault();
-  console.log("lol");
-}
-
 let grid = [];
 function createCanvas() {
   for (let i = 0; i < ROWS; i++) {
@@ -28,7 +24,6 @@ function createCanvas() {
       pix.setAttribute("id", "node-" + i + "-" + j);
       pix.classList.add("cell");
       pix.style.position = "absolute";
-      pix.style.border = "1px solid red";
       pix.style.left = j * PIXEL + "px";
       pix.style.top = i * PIXEL + "px";
       pix.style.width = PIXEL + "px";
@@ -47,8 +42,29 @@ createCanvas();
 
 const nodeSelector = [...document.querySelectorAll(".cell")];
 for (const nodes of nodeSelector) {
-  nodes.addEventListener("click", (event) => {
+  nodes.addEventListener("mousedown", (event) => {
     console.log("lol " + event.target.id);
-    event.target.classList.add("wall");
+
+    if (currentSetting == "WALL") {
+      if (event.target.classList != "cell wall") {
+        event.target.classList.add("wall");
+      } else {
+        event.target.classList.remove("wall");
+      }
+    }
+    if (currentSetting == "START") {
+      if (event.target.classList != "cell start") {
+        event.target.classList.add("start");
+      } else {
+        event.target.classList.remove("start");
+      }
+    }
+    if (currentSetting == "END") {
+      if (event.target.classList != "cell end") {
+        event.target.classList.add("end");
+      } else {
+        event.target.classList.remove("end");
+      }
+    }
   });
 }

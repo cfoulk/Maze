@@ -7,6 +7,19 @@
     margin:auto;
 }
 
+.cell {
+    border: 0.5px solid lightblue;
+}
+
 .wall {
-    background-color: black;
+    background-color: darkblue;
+    border: 0.5px darkblue;
+}
+.start {
+    background-color: green;
+    border: 0.5px green;
+}
+.end {
+    background-color: red;
+    border: 0.5px red;
 }
