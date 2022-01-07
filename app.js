@@ -13,9 +13,9 @@ let endX = 40;
 let endY = 15;
 
 class Node {
-  constructor(row, col, isStart, isEnd, isWall) {
-    this.row = row;
-    this.col = col;
+  constructor(col, row, isStart, isEnd, isWall) {
+    this.col = col; //x
+    this.row = row; //y
     this.isStart = isStart;
     this.isEnd = isEnd;
     this.isWall = isWall;
@@ -60,9 +60,9 @@ function createCanvas() {
     for (let j = 0; j < COLS; j++) {
       let pix = document.createElement("div");
       currRow.push(new Node(j, i, false, false, false));
-      pix.setAttribute("id", "node " + i + " " + j);
-      pix.setAttribute("data-x", i);
-      pix.setAttribute("data-y", j);
+      pix.setAttribute("id", "node " + j + " " + i);
+      pix.setAttribute("data-x", j);
+      pix.setAttribute("data-y", i);
       pix.classList.add("cell");
       pix.style.position = "absolute";
       pix.style.left = j * PIXEL + "px";
@@ -90,53 +90,59 @@ function addWall(x, y, event) {
     event.target.classList.remove("start");
     event.target.classList.remove("end");
     event.target.classList.add("wall");
-    grid[x][y].setWall(true);
-    grid[x][y].setStart(false);
-    grid[x][y].setEnd(false);
-    console.log(grid[x][y]);
+    grid[y][x].setWall(true);
+    grid[y][x].setStart(false);
+    grid[y][x].setEnd(false);
+    console.log(grid[y][x]);
   } else {
     event.target.classList.remove("wall");
     grid[x][y].setWall(false);
-    console.log(grid[x][y]);
+    console.log(grid[y][x]);
   }
 }
 function addStart(x, y, event) {
   if (event.target.classList != "cell start") {
     let id = "node " + startX + " " + startY;
+    console.log(id);
     document.getElementById(id).classList.remove("start");
-    grid[startX][startY].setStart(false);
+    grid[startY][startX].setStart(false);
     event.target.classList.remove("wall");
     event.target.classList.remove("end");
     event.target.classList.add("start");
-    console.log(grid[startX][startY]);
-    grid[x][y].setStart(true);
-    grid[x][y].setWall(false);
-    grid[x][y].setEnd(false);
+    console.log(grid[startY][startX]);
+    grid[y][x].setStart(true);
+    grid[y][x].setWall(false);
+    grid[y][x].setEnd(false);
     startX = x;
     startY = y;
-    console.log(grid[startX][startY]);
+    console.log(grid[startY][startX]);
   } else {
     event.target.classList.remove("start");
-    grid[x][y].setStart(false);
-    console.log(grid[x][y]);
+    grid[y][x].setStart(false);
+    console.log(grid[y][x]);
   }
 }
 function addEnd(x, y, event) {
   if (event.target.classList != "cell end") {
+    let id = "node " + endX + " " + endY;
+    console.log(id);
+
+    document.getElementById(id).classList.remove("end");
+    grid[endY][endX].setEnd(false);
     event.target.classList.remove("wall");
     event.target.classList.remove("start");
     event.target.classList.add("end");
-    grid[endX][endY].setEnd(false);
-    let oldEnd = document.getElementById("node" + x + " " + y);
-    //event.target.classList.remove("end");
-    grid[x][y].setEnd(true);
-    grid[x][y].setWall(false);
-    grid[x][y].setStart(false);
-    console.log(grid[x][y]);
+    console.log(grid[endY][endX]);
+    grid[y][x].setEnd(true);
+    grid[y][x].setWall(false);
+    grid[y][x].setStart(false);
+    endX = x;
+    endY = y;
+    console.log(grid[endY][endX]);
   } else {
     event.target.classList.remove("end");
-    grid[x][y].setEnd(false);
-    console.log(grid[x][y]);
+    grid[y][x].setEnd(false);
+    console.log(grid[y][x]);
   }
 }
 

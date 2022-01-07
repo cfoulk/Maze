@@ -9,7 +9,7 @@ Maze is a website that visualizes graph pathfinding algorithms.
   - [x] Make each node clickable
   - [x] Insert new start/end points
   - [x] Insert walls 
-  - [ ] Insertion alters data within the grid data structure
+  - [x] Insertion alters data within the grid data structure
   - [x] Buttons created for different states of adding to the grid (start/end/walls)
 - [ ] Path finding algorithm implementation with BFS/DFS.
 - [ ] Maze creation with BFS/Recursive division algorithms.
