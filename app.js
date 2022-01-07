@@ -2,6 +2,10 @@ let ROWS = 30;
 let COLS = 50;
 let PIXEL = 20;
 let currentSetting = "WALL";
+let canvas = document.getElementById("canvas");
+const wallsButton = document.querySelector(".walls-button");
+const startButton = document.querySelector(".start-button");
+const endButton = document.querySelector(".end-button");
 
 class Node {
   constructor(row, col, isStart, isEnd, isWall) {
@@ -13,7 +17,24 @@ class Node {
   }
 }
 
-let canvas = document.getElementById("canvas");
+wallsButton.addEventListener("click", (event) => {
+  currentSetting = "WALL";
+  startButton.classList.remove("selected");
+  endButton.classList.remove("selected");
+  event.target.classList.add("selected");
+});
+startButton.addEventListener("click", (event) => {
+  currentSetting = "START";
+  wallsButton.classList.remove("selected");
+  endButton.classList.remove("selected");
+  event.target.classList.add("selected");
+});
+endButton.addEventListener("click", (event) => {
+  currentSetting = "END";
+  wallsButton.classList.remove("selected");
+  startButton.classList.remove("selected");
+  event.target.classList.add("selected");
+});
 
 let grid = [];
 function createCanvas() {

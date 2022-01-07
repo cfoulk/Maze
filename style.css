@@ -4,7 +4,7 @@
     /*border: 5px solid black;*/
     position: relative;
     box-sizing: content-box;
-    margin:auto;
+    margin: auto;
 }
 
 .cell {
@@ -22,4 +22,16 @@
 .end {
     background-color: red;
     border: 0.5px red;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.selected {
+    background-color: lightblue;
+    border: thin solid darkblue;
+    border-radius: 10%;
 }
