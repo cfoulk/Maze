@@ -15,13 +15,25 @@
     background-color: darkblue;
     border: 0.5px darkblue;
 }
+
 .start {
     background-color: green;
     border: 0.5px green;
 }
+
 .end {
     background-color: red;
     border: 0.5px red;
+}
+
+.visited {
+    background-color: darkcyan;
+    border: darkcyan;
+}
+
+.path {
+    background-color: gold;
+    border: gold;
 }
 
 .btn-group {

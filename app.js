@@ -19,6 +19,10 @@ class Node {
     this.isStart = isStart;
     this.isEnd = isEnd;
     this.isWall = isWall;
+    this.visted = false;
+    this.gScore = Infinity;
+    this.fScore = Infinity;
+    this.parent = null;
   }
 
   setWall(b) {
@@ -96,7 +100,7 @@ function addWall(x, y, event) {
     console.log(grid[y][x]);
   } else {
     event.target.classList.remove("wall");
-    grid[x][y].setWall(false);
+    grid[y][x].setWall(false);
     console.log(grid[y][x]);
   }
 }
@@ -167,3 +171,5 @@ for (const nodes of nodeSelector) {
     }
   });
 }
+
+function BFS(startX, startY) {}
