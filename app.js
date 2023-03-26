@@ -35,10 +35,10 @@ function createCanvas() {
         currRow[j].setEnd(true);
       }
       canvas.appendChild(pix);
-      //console.log(new Node(i, j, false, false, false));
+      // console.log(new Node(i, j, false, false, false));
     }
-    //console.log(grid[i].toString());
     grid.push(currRow);
+    // console.log(grid[i].toString());
   }
 }
 
@@ -106,7 +106,10 @@ function addEnd(x, y, event) {
 }
 
 createCanvas();
-//console.log(grid.toString);
+
+console.log(JSON.stringify(grid[15][10]));
+console.log(JSON.stringify(grid[15][40]));
+console.log(JSON.stringify(grid[15][16]));
 
 const nodeSelector = [...document.querySelectorAll(".cell")];
 for (const nodes of nodeSelector) {
