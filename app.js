@@ -1,3 +1,5 @@
+import Node from "./modules/node.js"
+
 let ROWS = 30;
 let COLS = 50;
 let PIXEL = 20;
@@ -12,31 +14,31 @@ let startY = 15;
 let endX = 40;
 let endY = 15;
 
-class Node {
-  constructor(col, row, isStart, isEnd, isWall) {
-    this.col = col; //x
-    this.row = row; //y
-    this.isStart = isStart;
-    this.isEnd = isEnd;
-    this.isWall = isWall;
-    this.visted = false;
-    this.gScore = Infinity;
-    this.fScore = Infinity;
-    this.parent = null;
-  }
+// class Node {
+//   constructor(col, row, isStart, isEnd, isWall) {
+//     this.col = col; //x
+//     this.row = row; //y
+//     this.isStart = isStart;
+//     this.isEnd = isEnd;
+//     this.isWall = isWall;
+//     this.visted = false;
+//     this.gScore = Infinity;
+//     this.fScore = Infinity;
+//     this.parent = null;
+//   }
 
-  setWall(b) {
-    this.isWall = b;
-  }
+  // setWall(b) {
+  //   this.isWall = b;
+  // }
 
-  setStart(b) {
-    this.isStart = b;
-  }
+  // setStart(b) {
+  //   this.isStart = b;
+  // }
 
-  setEnd(b) {
-    this.isEnd = b;
-  }
-}
+  // setEnd(b) {
+  //   this.isEnd = b;
+  // }
+// }
 
 wallsButton.addEventListener("click", (event) => {
   currentSetting = "WALL";
