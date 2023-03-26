@@ -58,8 +58,8 @@ function addWall(x, y, event) {
 
 function addStart(x, y, event) {
     if (event.target.classList != "cell start") {
-        let id = "node " + startX + " " + startY;
         console.log("old start X: " + startX + " Y: " + startY);
+        let id = "node " + startX + " " + startY;
         document.getElementById(id).classList.remove("start");
         grid[startY][startX].setStart(false);
         event.target.classList.remove("wall");
@@ -82,8 +82,8 @@ function addStart(x, y, event) {
 
 function addEnd(x, y, event) {
     if (event.target.classList != "cell end") {
-        let id = "node " + endX + " " + endY;
         console.log("old end X: " + endX + " Y: " + endY);
+        let id = "node " + endX + " " + endY;
         document.getElementById(id).classList.remove("end");
         grid[endY][endX].setEnd(false);
         event.target.classList.remove("wall");
@@ -115,7 +115,7 @@ for (const nodes of nodeSelector) {
         event.preventDefault();
         mouseDown = true;
     });
-    nodes.addEventListener("mousemove", (event) => {
+    nodes.addEventListener("mouseenter", (event) => {
         if (mouseDown) {
             event.preventDefault();
             if (currentSetting == "WALL") {
