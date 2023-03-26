@@ -48,10 +48,11 @@ function addWall(x, y, event) {
         grid[y][x].setWall(true);
         grid[y][x].setStart(false);
         grid[y][x].setEnd(false);
-        // console.log(grid[y][x]);
+        grid[y][x].toString();
     } else {
         event.target.classList.remove("wall");
         grid[y][x].setWall(false);
+        grid[y][x].toString();
         // console.log(grid[y][x]);
     }
 }
@@ -114,19 +115,13 @@ for (const nodes of nodeSelector) {
     nodes.addEventListener("mousedown", (event) => {
         event.preventDefault();
         mouseDown = true;
+        addStuff(event);
     });
+
     nodes.addEventListener("mouseenter", (event) => {
         if (mouseDown) {
             event.preventDefault();
-            if (currentSetting == "WALL") {
-                addWall(event.target.dataset.x, event.target.dataset.y, event);
-            }
-            if (currentSetting == "START") {
-                addStart(event.target.dataset.x, event.target.dataset.y, event);
-            }
-            if (currentSetting == "END") {
-                addEnd(event.target.dataset.x, event.target.dataset.y, event);
-            }
+            addStuff(event);
         }
     });
     nodes.addEventListener("mouseup", () => {
@@ -134,4 +129,15 @@ for (const nodes of nodeSelector) {
     });
 }
 
+function addStuff(event) {
+    if (currentSetting == "WALL") {
+        addWall(event.target.dataset.x, event.target.dataset.y, event);
+    }
+    if (currentSetting == "START") {
+        addStart(event.target.dataset.x, event.target.dataset.y, event);
+    }
+    if (currentSetting == "END") {
+        addEnd(event.target.dataset.x, event.target.dataset.y, event);
+    }
+}
 function BFS(startX, startY) { }
