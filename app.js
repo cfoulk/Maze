@@ -1,63 +1,14 @@
-import Node from "./modules/node.js"
+import  Node  from "./modules/node.js"
+import { currentSetting } from "./modules/buttons.js"
 
 let ROWS = 30;
 let COLS = 50;
 let PIXEL = 20;
-let currentSetting = "WALL";
 let canvas = document.getElementById("canvas");
-const wallsButton = document.querySelector(".walls-button");
-const startButton = document.querySelector(".start-button");
-const endButton = document.querySelector(".end-button");
-
 let startX = 10;
 let startY = 15;
 let endX = 40;
 let endY = 15;
-
-// class Node {
-//   constructor(col, row, isStart, isEnd, isWall) {
-//     this.col = col; //x
-//     this.row = row; //y
-//     this.isStart = isStart;
-//     this.isEnd = isEnd;
-//     this.isWall = isWall;
-//     this.visted = false;
-//     this.gScore = Infinity;
-//     this.fScore = Infinity;
-//     this.parent = null;
-//   }
-
-  // setWall(b) {
-  //   this.isWall = b;
-  // }
-
-  // setStart(b) {
-  //   this.isStart = b;
-  // }
-
-  // setEnd(b) {
-  //   this.isEnd = b;
-  // }
-// }
-
-wallsButton.addEventListener("click", (event) => {
-  currentSetting = "WALL";
-  startButton.classList.remove("selected");
-  endButton.classList.remove("selected");
-  event.target.classList.add("selected");
-});
-startButton.addEventListener("click", (event) => {
-  currentSetting = "START";
-  wallsButton.classList.remove("selected");
-  endButton.classList.remove("selected");
-  event.target.classList.add("selected");
-});
-endButton.addEventListener("click", (event) => {
-  currentSetting = "END";
-  wallsButton.classList.remove("selected");
-  startButton.classList.remove("selected");
-  event.target.classList.add("selected");
-});
 
 let grid = [];
 function createCanvas() {
@@ -106,6 +57,7 @@ function addWall(x, y, event) {
     console.log(grid[y][x]);
   }
 }
+
 function addStart(x, y, event) {
   if (event.target.classList != "cell start") {
     let id = "node " + startX + " " + startY;
@@ -128,6 +80,7 @@ function addStart(x, y, event) {
     console.log(grid[y][x]);
   }
 }
+
 function addEnd(x, y, event) {
   if (event.target.classList != "cell end") {
     let id = "node " + endX + " " + endY;
