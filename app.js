@@ -11,7 +11,7 @@ let endX = 40;
 let endY = 15;
 
 let grid = [];
-function createCanvas() {
+const createCanvas = () => {
     for (let i = 0; i < ROWS; i++) {
         const currRow = [];
         for (let j = 0; j < COLS; j++) {
@@ -40,7 +40,7 @@ function createCanvas() {
     }
 }
 
-function addWall(x, y, event) {
+const addWall = (x, y, event) => {
     if (event.target.classList != "cell wall") {
         event.target.classList.remove("start");
         event.target.classList.remove("end");
@@ -57,7 +57,7 @@ function addWall(x, y, event) {
     }
 }
 
-function addStart(x, y, event) {
+const addStart = (x, y, event)  => {
     if (event.target.classList != "cell start") {
         console.log("old start X: " + startX + " Y: " + startY);
         let id = "node " + startX + " " + startY;
@@ -81,7 +81,7 @@ function addStart(x, y, event) {
     }
 }
 
-function addEnd(x, y, event) {
+const addEnd = (x, y, event) => {
     if (event.target.classList != "cell end") {
         console.log("old end X: " + endX + " Y: " + endY);
         let id = "node " + endX + " " + endY;
@@ -129,7 +129,7 @@ for (const nodes of nodeSelector) {
     });
 }
 
-function addStuff(event) {
+const addStuff = (event) => {
     if (currentSetting == "WALL") {
         addWall(event.target.dataset.x, event.target.dataset.y, event);
     }
