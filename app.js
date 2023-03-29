@@ -40,14 +40,30 @@ const createCanvas = () => {
     }
 }
 
+// messy solution
+const updateStatus = () => {
+    document.getElementById("status").innerHTML = "startX: " + startX + "\nstartY: " + startY + "\nendX: " + endX + "\nendY: " + endY;
+}
+
 const addWall = (x, y, event) => {
-    if (event.target.classList != "cell wall") {
+    if (event.target.classList == "cell start") {
+
         event.target.classList.remove("start");
+        grid[y][x].setStart(false);
+        startX = undefined;
+        startY = undefined;
+
+    } else if (event.target.classList == "cell end") {
+
         event.target.classList.remove("end");
+        grid[y][x].setEnd(false);
+        endX = undefined;
+        endY = undefined;
+
+    }
+    if (event.target.classList != "cell wall") {
         event.target.classList.add("wall");
         grid[y][x].setWall(true);
-        grid[y][x].setStart(false);
-        grid[y][x].setEnd(false);
         grid[y][x].toString();
     } else {
         event.target.classList.remove("wall");
@@ -55,14 +71,17 @@ const addWall = (x, y, event) => {
         grid[y][x].toString();
         // console.log(grid[y][x]);
     }
+    updateStatus();
 }
 
-const addStart = (x, y, event)  => {
+const addStart = (x, y, event) => {
     if (event.target.classList != "cell start") {
-        console.log("old start X: " + startX + " Y: " + startY);
-        let id = "node " + startX + " " + startY;
-        document.getElementById(id).classList.remove("start");
-        grid[startY][startX].setStart(false);
+        if (startX != undefined && startY != undefined) {
+            console.log("old start X: " + startX + " Y: " + startY);
+            let id = "node " + startX + " " + startY;
+            document.getElementById(id).classList.remove("start");
+            grid[startY][startX].setStart(false);
+        }
         event.target.classList.remove("wall");
         event.target.classList.remove("end");
         event.target.classList.add("start");
@@ -75,18 +94,21 @@ const addStart = (x, y, event)  => {
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        // startX=undefined;
-        // startY=undefined;
+        startX = undefined;
+        startY = undefined;
         // // console.log(grid[y][x]);
     }
+    updateStatus();
 }
 
 const addEnd = (x, y, event) => {
     if (event.target.classList != "cell end") {
-        console.log("old end X: " + endX + " Y: " + endY);
-        let id = "node " + endX + " " + endY;
-        document.getElementById(id).classList.remove("end");
-        grid[endY][endX].setEnd(false);
+        if (endX != undefined && endY != undefined) {
+            console.log("old end X: " + endX + " Y: " + endY);
+            let id = "node " + endX + " " + endY;
+            document.getElementById(id).classList.remove("end");
+            grid[endY][endX].setEnd(false);
+        }
         event.target.classList.remove("wall");
         event.target.classList.remove("start");
         event.target.classList.add("end");
@@ -100,11 +122,15 @@ const addEnd = (x, y, event) => {
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
+        endX = undefined;
+        endY = undefined;
         // console.log(grid[y][x]);
     }
+    updateStatus();
 }
 
 createCanvas();
+updateStatus();
 
 // grid[15][10].toString();
 // grid[15][40].toString();
