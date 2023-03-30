@@ -5,8 +5,8 @@ let ROWS = 30;
 let COLS = 50;
 let PIXEL = 20;
 let start = {
-    x: 10, 
-    y: 15 
+    x: 10,
+    y: 15
 }
 let end = {
     x: 40,
@@ -169,6 +169,7 @@ const resetMap = () => {
                 grid[i][j].visited = false;
                 grid[i][j].parent = null;
                 document.getElementById(id).classList.remove("visited");
+                document.getElementById(id).classList.remove("found");
             }
         }
     }
@@ -181,6 +182,7 @@ const resetVisited = () => {
                 grid[i][j].visited = false;
                 let id = "node " + j + " " + i;
                 document.getElementById(id).classList.remove("visited");
+                document.getElementById(id).classList.remove("found");
             }
         }
     }
@@ -251,10 +253,12 @@ const bfs = () => {
         ]
 
         if (v.row == end.y && v.col == end.x) {
+            let id = "node " + v.col + " " + v.row;
+            document.getElementById(id).classList.add("found");
             break;
         }
         for (let i = 0; i < edges.length; i++) {
-            let edgeY = edges[i].y; 
+            let edgeY = edges[i].y;
             let edgeX = edges[i].x;
 
             if (edgeY < 0 || edgeY > ROWS - 1) {
