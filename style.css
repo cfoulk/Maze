@@ -17,6 +17,11 @@
     border: 0.5px solid darkblue;
 }
 
+.visited {
+    background-color: darkcyan;
+    border: darkcyan;
+}
+
 .start {
     background-color: green;
     border: 0.5px solid green;
@@ -25,11 +30,6 @@
 .end {
     background-color: red;
     border: 0.5px solid red;
-}
-
-.visited {
-    background-color: darkcyan;
-    border: darkcyan;
 }
 
 .path {

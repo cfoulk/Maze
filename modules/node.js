@@ -5,9 +5,9 @@ export default class Node {
         this.isStart = isStart;
         this.isEnd = isEnd;
         this.isWall = isWall;
-        this.visted = false;
-        this.gScore = Infinity;
-        this.fScore = Infinity;
+        this.visited = false;
+        // this.gScore = Infinity;
+        // this.fScore = Infinity;
         this.parent = null;
     }
 
@@ -21,6 +21,14 @@ export default class Node {
 
     setEnd(b) {
         this.isEnd = b;
+    }
+
+    setVisited(b) {
+        this.visted = b;
+    }
+
+    setParent(b) {
+        this.parent = b;
     }
 
     toString() {
