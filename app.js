@@ -18,6 +18,7 @@ const randomzieButton = document.querySelector(".randomzie-button");
 const resetMapButton = document.querySelector(".reset-button");
 
 let grid = [];
+
 const createCanvas = () => {
     for (let i = 0; i < ROWS; i++) {
         const currRow = [];
@@ -49,7 +50,7 @@ const createCanvas = () => {
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "start.x: " + start.x + "\nstart.y: " + start.y + "\nend.x: " + end.x + "\nend.y: " + end.y;
+    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")";
 }
 
 const addWall = (x, y, event) => {
@@ -159,9 +160,10 @@ const resetMap = () => {
                 let id = "node " + j + " " + i;
                 document.getElementById(id).classList.remove("wall");
             }
-        }
+       }
     }
 }
+
 createCanvas();
 updateStatus();
 
@@ -170,6 +172,7 @@ updateStatus();
 // grid[15][16].toString();
 let mouseDown = false;
 const nodeSelector = [...document.querySelectorAll(".cell")];
+
 for (const nodes of nodeSelector) {
     nodes.addEventListener("mousedown", (event) => {
         event.preventDefault();
@@ -199,9 +202,11 @@ const addStuff = (event) => {
         addEnd(event.target.dataset.x, event.target.dataset.y, event);
     }
 }
+
 randomzieButton.addEventListener("click", () => {
     createRandom();
 });
 resetMapButton.addEventListener("click", () => {
     resetMap();
 });
+

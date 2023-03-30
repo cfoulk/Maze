@@ -1,29 +1,30 @@
 #canvas {
     width: 1000px;
     height: 600px;
-    /*border: 5px solid black;*/
+    /* border: 5px solid black; */
     position: relative;
     box-sizing: content-box;
     margin: auto;
 }
 
 .cell {
+    background-color: white;
     border: 0.5px solid lightblue;
 }
 
 .wall {
     background-color: darkblue;
-    border: 0.5px darkblue;
+    border: 0.5px solid darkblue;
 }
 
 .start {
     background-color: green;
-    border: 0.5px green;
+    border: 0.5px solid green;
 }
 
 .end {
     background-color: red;
-    border: 0.5px red;
+    border: 0.5px solid red;
 }
 
 .visited {
