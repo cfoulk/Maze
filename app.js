@@ -4,11 +4,18 @@ import { currentSetting } from "./modules/buttons.js"
 let ROWS = 30;
 let COLS = 50;
 let PIXEL = 20;
+let start = {
+    x: 10,
+    y: 15
+}
+let end = {
+    x: 40,
+    y: 15
+}
+
 let canvas = document.getElementById("canvas");
-let startX = 10;
-let startY = 15;
-let endX = 40;
-let endY = 15;
+const randomzieButton = document.querySelector(".randomzie-button");
+const resetMapButton = document.querySelector(".reset-button");
 
 let grid = [];
 const createCanvas = () => {
@@ -26,11 +33,11 @@ const createCanvas = () => {
             pix.style.top = i * PIXEL + "px";
             pix.style.width = PIXEL + "px";
             pix.style.height = PIXEL + "px";
-            if (j == startX && i == startY) {
+            if (j == start.x && i == start.y) {
                 pix.classList.add("start");
                 currRow[j].setStart(true);
             }
-            if (j == endX && i == endY) {
+            if (j == end.x && i == end.y) {
                 pix.classList.add("end");
                 currRow[j].setEnd(true);
             }
@@ -42,24 +49,20 @@ const createCanvas = () => {
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "startX: " + startX + "\nstartY: " + startY + "\nendX: " + endX + "\nendY: " + endY;
+    document.getElementById("status").innerHTML = "start.x: " + start.x + "\nstart.y: " + start.y + "\nend.x: " + end.x + "\nend.y: " + end.y;
 }
 
 const addWall = (x, y, event) => {
     if (event.target.classList == "cell start") {
-
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        startX = undefined;
-        startY = undefined;
-
+        start.x = undefined;
+        start.y = undefined;
     } else if (event.target.classList == "cell end") {
-
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
-        endX = undefined;
-        endY = undefined;
-
+        end.x = undefined;
+        end.y = undefined;
     }
     if (event.target.classList != "cell wall") {
         event.target.classList.add("wall");
@@ -69,66 +72,96 @@ const addWall = (x, y, event) => {
         event.target.classList.remove("wall");
         grid[y][x].setWall(false);
         grid[y][x].toString();
-        // console.log(grid[y][x]);
     }
     updateStatus();
 }
 
 const addStart = (x, y, event) => {
     if (event.target.classList != "cell start") {
-        if (startX != undefined && startY != undefined) {
-            console.log("old start X: " + startX + " Y: " + startY);
-            let id = "node " + startX + " " + startY;
+        if (event.target.classList == "cell end") {
+            event.target.classList.remove("end");
+            grid[y][x].setEnd(false);
+            end.x = undefined;
+            end.y = undefined;
+        }
+        if (start.x != undefined && start.y != undefined) {
+            console.log("old start X: " + start.x + " Y: " + start.y);
+            let id = "node " + start.x + " " + start.y;
             document.getElementById(id).classList.remove("start");
-            grid[startY][startX].setStart(false);
+            grid[start.y][start.x].setStart(false);
         }
         event.target.classList.remove("wall");
-        event.target.classList.remove("end");
         event.target.classList.add("start");
         grid[y][x].setStart(true);
         grid[y][x].setWall(false);
-        grid[y][x].setEnd(false);
-        startX = x;
-        startY = y;
-        console.log("new start X: " + startX + " Y: " + startY);
+        start.x = x;
+        start.y = y;
+        console.log("new start X: " + start.x + " Y: " + start.y);
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        startX = undefined;
-        startY = undefined;
-        // // console.log(grid[y][x]);
+        start.x = undefined;
+        start.y = undefined;
     }
     updateStatus();
 }
 
 const addEnd = (x, y, event) => {
     if (event.target.classList != "cell end") {
-        if (endX != undefined && endY != undefined) {
-            console.log("old end X: " + endX + " Y: " + endY);
-            let id = "node " + endX + " " + endY;
+        if (event.target.classList == "cell start") {
+            event.target.classList.remove("start");
+            grid[y][x].setStart(false);
+            start.x = undefined;
+            start.y = undefined;
+        }
+        if (end.x != undefined && end.y != undefined) {
+            console.log("old end X: " + end.x + " Y: " + end.y);
+            let id = "node " + end.x + " " + end.y;
             document.getElementById(id).classList.remove("end");
-            grid[endY][endX].setEnd(false);
+            grid[end.y][end.x].setEnd(false);
         }
         event.target.classList.remove("wall");
-        event.target.classList.remove("start");
         event.target.classList.add("end");
-        // console.log(grid[endY][endX]);
         grid[y][x].setEnd(true);
         grid[y][x].setWall(false);
-        grid[y][x].setStart(false);
-        endX = x;
-        endY = y;
-        console.log("new end X: " + endX + " Y: " + endY);
+        end.x = x;
+        end.y = y;
+        console.log("new end X: " + end.x + " Y: " + end.y);
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
-        endX = undefined;
-        endY = undefined;
-        // console.log(grid[y][x]);
+        end.x = undefined;
+        end.y = undefined;
     }
     updateStatus();
 }
 
+const createRandom = () => {
+    resetMap();
+    for (let i = 0; i < ROWS; i++) {
+        for (let j = 0; j < COLS; j++) {
+            if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
+                if (Math.floor(Math.random() * 100) > 70) {
+                    grid[i][j].setWall(true);
+                    let id = "node " + j + " " + i;
+                    document.getElementById(id).classList.add("wall");
+                }
+            }
+        }
+    }
+}
+
+const resetMap = () => {
+    for (let i = 0; i < ROWS; i++) {
+        for (let j = 0; j < COLS; j++) {
+            if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
+                grid[i][j].setWall(false);
+                let id = "node " + j + " " + i;
+                document.getElementById(id).classList.remove("wall");
+            }
+        }
+    }
+}
 createCanvas();
 updateStatus();
 
@@ -166,4 +199,9 @@ const addStuff = (event) => {
         addEnd(event.target.dataset.x, event.target.dataset.y, event);
     }
 }
-function BFS(startX, startY) { }
+randomzieButton.addEventListener("click", () => {
+    createRandom();
+});
+resetMapButton.addEventListener("click", () => {
+    resetMap();
+});
