@@ -13,6 +13,8 @@ let end = {
     y: 15
 }
 
+let done = false;
+
 let canvas = document.getElementById("canvas");
 const randomzieButton = document.querySelector(".randomzie-button");
 const resetMapButton = document.querySelector(".reset-button");
@@ -99,6 +101,9 @@ const addStart = (x, y, event) => {
         start.x = x;
         start.y = y;
         console.log("new start X: " + start.x + " Y: " + start.y);
+        if(done) {
+            bfs();
+        }
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
@@ -129,6 +134,9 @@ const addEnd = (x, y, event) => {
         end.x = x;
         end.y = y;
         console.log("new end X: " + end.x + " Y: " + end.y);
+        if(done) {
+            bfs();
+        }
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
@@ -178,12 +186,14 @@ const resetMap = () => {
 const resetVisited = () => {
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
-            if (grid[i][j].visited == true) {
+            // if (grid[i][j].visited == true) {
                 grid[i][j].visited = false;
+                grid[i][j].parent = null;
                 let id = "node " + j + " " + i;
+                document.getElementById(id).classList.remove("path");
                 document.getElementById(id).classList.remove("visited");
                 document.getElementById(id).classList.remove("found");
-            }
+            // }
         }
     }
 }
@@ -280,6 +290,7 @@ const bfs = () => {
 
     }
     console.log("out!");
+    done = true;
     createPath();
 }
 

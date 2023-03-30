@@ -12,11 +12,6 @@
     border: 0.5px solid lightblue;
 }
 
-.wall {
-    background-color: darkblue;
-    border: 0.5px solid darkblue;
-}
-
 .visited {
     background-color: darkcyan;
     border: 0.5px solid darkcyan;
@@ -40,6 +35,11 @@
 .path {
     background-color: gold;
     border: 0.5px solid gold;
+}
+
+.wall {
+    background-color: darkblue;
+    border: 0.5px solid darkblue;
 }
 
 .btn-group {
