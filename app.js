@@ -164,6 +164,19 @@ const resetMap = () => {
                 document.getElementById(id).classList.remove("visited");
             } else {
                 let id = "node " + j + " " + i;
+                grid[i][j].visited = false;
+                document.getElementById(id).classList.remove("visited");
+            }
+        }
+    }
+}
+
+const resetVisited = () => {
+    for (let i = 0; i < ROWS; i++) {
+        for (let j = 0; j < COLS; j++) {
+            if (grid[i][j].visited == true) {
+                grid[i][j].visited = false;
+                let id = "node " + j + " " + i;
                 document.getElementById(id).classList.remove("visited");
             }
         }
@@ -209,13 +222,37 @@ const addStuff = (event) => {
     }
 }
 
+const createPath = () => {
+
+    let path = [];
+    let p = grid[end.y][end.x].parent;
+    // console.log(p.toString());
+    path.push({ x: p.col, y: p.row });
+    // console.log(path[0].toString());
+    // // console.log(p.parent)
+    while (p.parent.parent != null) {
+        p = p.parent;
+        // p = grid[end.y][end.x].parent;
+        path.push({ x: p.col, y: p.row });
+    }
+    path.forEach(x => console.log(x));
+
+    for (let i = 0; i < path.length; i++) {
+
+        // grid[i][j].visited = false;
+        let id = "node " + path[i].x + " " + path[i].y;
+        document.getElementById(id).classList.add("path");
+    }
+
+}
 
 const bfs = () => {
+    resetVisited();
     let q = [];
-    grid[start.y][start.x].setVisited(true);
+    grid[start.y][start.x].visited = true;
     // q.push(grid[start.y][start.x]);
     q.push({ row: start.y, col: start.x });
-    console.log("bfs started")
+    // console.log("bfs started")
     while (q.length > 0) {
         // console.time("shift");
         let v = q.shift();
@@ -230,12 +267,12 @@ const bfs = () => {
         ]
 
         // console.log("going in!");
-        console.log("deque !!! col: " + v.col + ", row: " + v.row);
+        // console.log("deque !!! col: " + v.col + ", row: " + v.row);
         // console.log(edges);
         // break;
         // console.timeEnd("edge");
         if (v.row == end.y && v.col == end.x) {
-            console.log("found the end!");
+            // console.log("found the end!");
             break;
         }
         for (let i = 0; i < edges.length; i++) {
@@ -243,7 +280,7 @@ const bfs = () => {
             let edgeX = parseInt(edges[i].x);
 
             // there seems to be some type def problem with our coordinates
-            console.log("edgeX: " + edgeX + " edgeY: " + edgeY);
+            // console.log("edgeX: " + edgeX + " edgeY: " + edgeY);
             // console.log(edges);
             if (edgeY < 0 || edgeY > ROWS - 1) {
                 console.log("out of bounds");
@@ -255,28 +292,30 @@ const bfs = () => {
             }
             // console.log(grid[edgeY][edgeX].visited);
             // let current = grid[edgeY][edgeX];
-            console.log(grid[edgeY][edgeX].visited);
-            if (grid[edgeY][edgeX].visited == false) {
-            // if (current.visited === false) {
+            // console.log(grid[edgeY][edgeX].visited);
+            if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
+                // if (current.visited === false) {
                 // console.time("lol");
                 grid[edgeY][edgeX].visited = true;
-                console.log(grid[edgeY][edgeX]);
+                // console.log(grid[edgeY][edgeX]);
                 let id = "node " + edgeX + " " + edgeY;
                 document.getElementById(id).classList.add("visited");
 
-                // grid[edgeY][edgeX].setParent(v); // maybe set parent directly to the node within grid
+                grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
+                console.log(grid[edgeY][edgeX].parent);
                 // q.push(grid[edgeY][edgeX]); 
-                console.log("pushed !!! edgeX: " + edgeX + " edgeY: " + edgeY);
+                // console.log("pushed !!! edgeX: " + edgeX + " edgeY: " + edgeY);
 
                 q.push({ row: edgeY, col: edgeX });
                 // console.timeEnd("lol");
-                console.log("after push");
+                // console.log("after push");
                 // performance.memory.usedJSHeapSize; // how much you're currently using
             }
         }
 
     }
     console.log("out!");
+    createPath();
 }
 
 randomzieButton.addEventListener("click", () => {
