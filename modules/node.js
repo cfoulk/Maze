@@ -6,8 +6,8 @@ export default class Node {
         this.isEnd = isEnd;
         this.isWall = isWall;
         this.visited = false;
-        // this.gScore = Infinity;
-        // this.fScore = Infinity;
+        this.gScore = Infinity;
+        this.fScore = Infinity;
         this.parent = null;
     }
 
