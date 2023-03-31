@@ -14,11 +14,13 @@ let end = {
 }
 
 let done = false;
+let done2 = false;
 
 let canvas = document.getElementById("canvas");
 const randomzieButton = document.querySelector(".randomzie-button");
 const resetMapButton = document.querySelector(".reset-button");
 const bfsButton = document.querySelector(".bfs-button");
+const dfsButton = document.querySelector(".dfs-button");
 
 let grid = [];
 
@@ -53,7 +55,7 @@ const createCanvas = () => {
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")";
+    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + done + "\ndfsa = " + done2;
 }
 
 const addWall = (x, y, event) => {
@@ -78,6 +80,12 @@ const addWall = (x, y, event) => {
         grid[y][x].toString();
     }
     updateStatus();
+    if (done) {
+        bfs();
+    }
+    if (done2) {
+        dfs();
+    }
 }
 
 const addStart = (x, y, event) => {
@@ -101,8 +109,11 @@ const addStart = (x, y, event) => {
         start.x = x;
         start.y = y;
         console.log("new start X: " + start.x + " Y: " + start.y);
-        if(done) {
+        if (done) {
             bfs();
+        }
+        if (done2) {
+            dfs();
         }
     } else { //remove the set wall
         event.target.classList.remove("start");
@@ -134,8 +145,11 @@ const addEnd = (x, y, event) => {
         end.x = x;
         end.y = y;
         console.log("new end X: " + end.x + " Y: " + end.y);
-        if(done) {
+        if (done) {
             bfs();
+        }
+        if (done2) {
+            dfs();
         }
     } else {
         event.target.classList.remove("end");
@@ -162,6 +176,8 @@ const createRandom = () => {
 }
 
 const resetMap = () => {
+    done = false;
+    done2 = false;
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
@@ -187,12 +203,12 @@ const resetVisited = () => {
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             // if (grid[i][j].visited == true) {
-                grid[i][j].visited = false;
-                grid[i][j].parent = null;
-                let id = "node " + j + " " + i;
-                document.getElementById(id).classList.remove("path");
-                document.getElementById(id).classList.remove("visited");
-                document.getElementById(id).classList.remove("found");
+            grid[i][j].visited = false;
+            grid[i][j].parent = null;
+            let id = "node " + j + " " + i;
+            document.getElementById(id).classList.remove("path");
+            document.getElementById(id).classList.remove("visited");
+            document.getElementById(id).classList.remove("found");
             // }
         }
     }
@@ -236,20 +252,30 @@ const addStuff = (event) => {
 
 const createPath = () => {
     let path = [];
-    let p = grid[end.y][end.x].parent;
-    path.push({ x: p.col, y: p.row });
-    while (p.parent.parent != null) {
-        p = p.parent;
+    try {
+        let p = grid[end.y][end.x].parent;
         path.push({ x: p.col, y: p.row });
-    }
-    for (let i = 0; i < path.length; i++) {
-        let id = "node " + path[i].x + " " + path[i].y;
-        document.getElementById(id).classList.add("path");
+
+        while (p.parent.parent != null) {
+            p = p.parent;
+            path.push({ x: p.col, y: p.row });
+        }
+        for (let i = 0; i < path.length; i++) {
+            let id = "node " + path[i].x + " " + path[i].y;
+            document.getElementById(id).classList.add("path");
+        }
+    } catch (error) {
+        console.log("walled in!");
     }
 }
 
 const bfs = () => {
     resetVisited();
+    if (start.x == undefined || end.x == undefined) {
+        alert("undefined start/end point");
+        // break;
+        return;
+    }
     let q = [];
     grid[start.y][start.x].visited = true;
     q.push({ row: start.y, col: start.x });
@@ -263,8 +289,8 @@ const bfs = () => {
         ]
 
         if (v.row == end.y && v.col == end.x) {
-            let id = "node " + v.col + " " + v.row;
-            document.getElementById(id).classList.add("found");
+            // let id = "node " + v.col + " " + v.row;
+            // document.getElementById(id).classList.add("found");
             break;
         }
         for (let i = 0; i < edges.length; i++) {
@@ -272,11 +298,9 @@ const bfs = () => {
             let edgeX = edges[i].x;
 
             if (edgeY < 0 || edgeY > ROWS - 1) {
-                console.log("out of bounds edgeX: " + edgeX + " edgeY: " + edgeY);
                 continue;
             }
             if (edgeX < 0 || edgeX > COLS - 1) {
-                console.log("out of bounds edgeX: " + edgeX + " edgeY: " + edgeY);
                 continue;
             }
             if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
@@ -289,11 +313,60 @@ const bfs = () => {
         }
 
     }
-    console.log("out!");
     done = true;
     createPath();
 }
+// behaving more correctly but doesn't do guarentee shortest path
+const dfs = () => {
+    resetVisited();
+    if (start.x == undefined || end.x == undefined) {
+        alert("undefined start/end point");
+        // break;
+        return;
+    }
+    let q = [];
+    // grid[start.y][start.x].visited = true;
+    q.push({ row: start.y, col: start.x });
+    while (q.length > 0) {
+        let v = q.pop();
+        let edges = [
+            { y: parseInt(v.row), x: parseInt(v.col) - 1 },
+            { y: parseInt(v.row) + 1, x: parseInt(v.col) },
+            { y: parseInt(v.row), x: parseInt(v.col) + 1 },
+            { y: parseInt(v.row) - 1, x: parseInt(v.col) },
+        ]
 
+        if (v.row == end.y && v.col == end.x) {
+            // let id = "node " + v.col + " " + v.row;
+            // document.getElementById(id).classList.add("found");
+            break;
+        }
+        if (grid[v.row][v.col].visited == false) {
+            grid[v.row][v.col].visited = true
+            let id = "node " + v.col + " " + v.row;
+            document.getElementById(id).classList.add("visited");
+            for (let i = 0; i < edges.length; i++) {
+                let edgeY = edges[i].y;
+                let edgeX = edges[i].x;
+
+                if (edgeY < 0 || edgeY > ROWS - 1) {
+                    continue;
+                }
+                if (edgeX < 0 || edgeX > COLS - 1) {
+                    continue;
+                }
+                if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
+                    // grid[edgeY][edgeX].visited = true;
+                    q.push({ row: edgeY, col: edgeX });
+                    grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
+                }
+            }
+        }
+
+    }
+    done2 = true;
+    createPath();
+}
 randomzieButton.addEventListener("click", () => {
     createRandom();
 });
@@ -302,4 +375,11 @@ resetMapButton.addEventListener("click", () => {
 });
 bfsButton.addEventListener("click", () => {
     bfs();
+    done2 = false;
+    updateStatus();
+});
+dfsButton.addEventListener("click", () => {
+    dfs();
+    done = false;
+    updateStatus();
 });
