@@ -23,6 +23,8 @@ const bfsButton = document.querySelector(".bfs-button");
 const dfsButton = document.querySelector(".dfs-button");
 
 let grid = [];
+let visitedNodes = [];
+let path = [];
 
 const createCanvas = () => {
     for (let i = 0; i < ROWS; i++) {
@@ -55,9 +57,31 @@ const createCanvas = () => {
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + done + "\ndfsa = " + done2;
+    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + done + "\ndfs = " + done2;
 }
 
+const animateVisitedNodes = () => {
+    for (let i = 0; i <= visitedNodes.length; i++) {
+        if (i == visitedNodes.length) {
+            for (let j = path.length; j >= 0; j--) {
+                console.log(path.length);
+                setTimeout(() => {
+                    console.log(path[j]);
+                    // const { prow, pcol } = path[j];
+                    let id = "node " + path[j].x + " " + path[j].y;
+                    console.log(id);
+                    document.getElementById(id).classList.add("path");
+                }, 10 * i);
+            }
+            return;
+        }
+        setTimeout(() => {
+            const { row, col } = visitedNodes[i];
+            let id = "node " + col + " " + row;
+            document.getElementById(id).classList.add("visited");
+        }, 10 * i);
+    }
+}
 const addWall = (x, y, event) => {
     if (event.target.classList == "cell start") {
         event.target.classList.remove("start");
@@ -80,12 +104,12 @@ const addWall = (x, y, event) => {
         grid[y][x].toString();
     }
     updateStatus();
-    if (done) {
-        bfs();
-    }
-    if (done2) {
-        dfs();
-    }
+    // if (done) {
+    //     bfs();
+    // }
+    // if (done2) {
+    //     dfs();
+    // }
 }
 
 const addStart = (x, y, event) => {
@@ -178,6 +202,8 @@ const createRandom = () => {
 const resetMap = () => {
     done = false;
     done2 = false;
+    visitedNodes = [];
+    path = [];
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
@@ -200,6 +226,8 @@ const resetMap = () => {
 }
 
 const resetVisited = () => {
+    visitedNodes = [];
+    path = [];
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             // if (grid[i][j].visited == true) {
@@ -251,7 +279,6 @@ const addStuff = (event) => {
 }
 
 const createPath = () => {
-    let path = [];
     try {
         let p = grid[end.y][end.x].parent;
         path.push({ x: p.col, y: p.row });
@@ -260,13 +287,15 @@ const createPath = () => {
             p = p.parent;
             path.push({ x: p.col, y: p.row });
         }
-        for (let i = 0; i < path.length; i++) {
-            let id = "node " + path[i].x + " " + path[i].y;
-            document.getElementById(id).classList.add("path");
-        }
+        // for (let i = 0; i < path.length; i++) {
+        //     let id = "node " + path[i].x + " " + path[i].y;
+        //     document.getElementById(id).classList.add("path");
+        // }
     } catch (error) {
         console.log("walled in!");
     }
+    console.log(path);
+    // return path;
 }
 
 const bfs = () => {
@@ -276,11 +305,12 @@ const bfs = () => {
         // break;
         return;
     }
-    let q = [];
+    let queue = [];
     grid[start.y][start.x].visited = true;
-    q.push({ row: start.y, col: start.x });
-    while (q.length > 0) {
-        let v = q.shift();
+    queue.push({ row: start.y, col: start.x });
+    visitedNodes.push({ row: start.y, col: start.x });
+    while (queue.length > 0) {
+        let v = queue.shift();
         let edges = [
             { y: parseInt(v.row) - 1, x: parseInt(v.col) },
             { y: parseInt(v.row), x: parseInt(v.col) - 1 },
@@ -305,16 +335,18 @@ const bfs = () => {
             }
             if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
                 grid[edgeY][edgeX].visited = true;
-                let id = "node " + edgeX + " " + edgeY;
-                document.getElementById(id).classList.add("visited");
+                // let id = "node " + edgeX + " " + edgeY;
+                // document.getElementById(id).classList.add("visited");
                 grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
-                q.push({ row: edgeY, col: edgeX });
+                queue.push({ row: edgeY, col: edgeX });
+                visitedNodes.push({ row: edgeY, col: edgeX });
             }
         }
 
     }
-    done = true;
     createPath();
+    animateVisitedNodes();
+    done = true;
 }
 // behaving more correctly but doesn't do guarentee shortest path
 const dfs = () => {
@@ -324,11 +356,12 @@ const dfs = () => {
         // break;
         return;
     }
-    let q = [];
+    let stack = [];
     // grid[start.y][start.x].visited = true;
-    q.push({ row: start.y, col: start.x });
-    while (q.length > 0) {
-        let v = q.pop();
+    stack.push({ row: start.y, col: start.x });
+    visitedNodes.push({ row: start.y, col: start.x });
+    while (stack.length > 0) {
+        let v = stack.pop();
         let edges = [
             { y: parseInt(v.row), x: parseInt(v.col) - 1 },
             { y: parseInt(v.row) + 1, x: parseInt(v.col) },
@@ -343,8 +376,8 @@ const dfs = () => {
         }
         if (grid[v.row][v.col].visited == false) {
             grid[v.row][v.col].visited = true
-            let id = "node " + v.col + " " + v.row;
-            document.getElementById(id).classList.add("visited");
+            // let id = "node " + v.col + " " + v.row;
+            // document.getElementById(id).classList.add("visited");
             for (let i = 0; i < edges.length; i++) {
                 let edgeY = edges[i].y;
                 let edgeX = edges[i].x;
@@ -356,9 +389,9 @@ const dfs = () => {
                     continue;
                 }
                 if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
-                    // grid[edgeY][edgeX].visited = true;
-                    q.push({ row: edgeY, col: edgeX });
                     grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
+                    stack.push({ row: edgeY, col: edgeX });
+                    visitedNodes.push({ row: edgeY, col: edgeX });
                 }
             }
         }
@@ -366,6 +399,7 @@ const dfs = () => {
     }
     done2 = true;
     createPath();
+    animateVisitedNodes();
 }
 randomzieButton.addEventListener("click", () => {
     createRandom();

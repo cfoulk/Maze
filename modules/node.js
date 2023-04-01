@@ -6,9 +6,10 @@ export default class Node {
         this.isEnd = isEnd;
         this.isWall = isWall;
         this.visited = false;
-        this.gScore = Infinity;
-        this.fScore = Infinity;
         this.parent = null;
+        this.weight = 1;
+        // this.gScore = Infinity;
+        // this.fScore = Infinity;
     }
 
     setWall(b) {
