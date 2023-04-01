@@ -75,8 +75,12 @@ const animateVisitedNodes = () => {
         }
         setTimeout(() => {
             const { row, col } = visitedNodes[i];
-            let id = "node " + col + " " + row;
-            document.getElementById(id).classList.add("visited");
+            if (row == start.y && col == start.x || row == end.y && col == end.x) {
+                return;
+            } else {
+                let id = "node " + col + " " + row;
+                document.getElementById(id).classList.add("visited");
+            }
         }, 10 * i);
     }
 }
@@ -88,7 +92,7 @@ const animatePath = () => {
             const { row, col } = proper[i];
             let id = "node " + col + " " + row;
             document.getElementById(id).classList.add("path");
-        }, 50 * i);
+        }, 25 * i);
     }
 }
 
@@ -154,6 +158,7 @@ const addStart = (x, y, event) => {
         grid[y][x].setStart(false);
         start.x = undefined;
         start.y = undefined;
+        resetVisited();
     }
     updateStatus();
 }
@@ -190,6 +195,13 @@ const addEnd = (x, y, event) => {
         grid[y][x].setEnd(false);
         end.x = undefined;
         end.y = undefined;
+        resetVisited();
+        // if (done) {
+        //     bfs();
+        // }
+        // if (done2) {
+        //     dfs();
+        // }
     }
     updateStatus();
 }
@@ -302,9 +314,13 @@ const recreateVisual = () => {
     console.log("visited: " + visitedNodes.length + "\npath: " + path.length);
     for (let i = 0; i < visitedNodes.length; i++) {
         const { row, col } = visitedNodes[i];
-        let id = "node " + col + " " + row;
-        console.log(id);
-        document.getElementById(id).classList.add("visited");
+        if (row == start.y && col == start.x || row == end.y && col == end.x) {
+            continue;
+        } else {
+            let id = "node " + col + " " + row;
+            console.log(id);
+            document.getElementById(id).classList.add("visited");
+        }
     }
     const proper = path.reverse();
     for (let j = 0; j < proper.length; j++) {
@@ -421,12 +437,14 @@ resetMapButton.addEventListener("click", () => {
     resetMap();
 });
 bfsButton.addEventListener("click", () => {
-    bfs();
+    done = false;
     done2 = false;
+    bfs();
     updateStatus();
 });
 dfsButton.addEventListener("click", () => {
-    dfs();
     done = false;
+    done2 = false;
+    dfs();
     updateStatus();
 });
