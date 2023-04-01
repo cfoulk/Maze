@@ -63,16 +63,14 @@ const updateStatus = () => {
 const animateVisitedNodes = () => {
     for (let i = 0; i <= visitedNodes.length; i++) {
         if (i == visitedNodes.length) {
-            for (let j = path.length; j >= 0; j--) {
-                console.log(path.length);
-                setTimeout(() => {
-                    console.log(path[j]);
-                    // const { prow, pcol } = path[j];
-                    let id = "node " + path[j].x + " " + path[j].y;
-                    console.log(id);
-                    document.getElementById(id).classList.add("path");
-                }, 10 * i);
-            }
+            setTimeout(() => {
+                animatePath();
+                // console.log(path[j]);
+                // // const { prow, pcol } = path[j];
+                // let id = "node " + path[j].x + " " + path[j].y;
+                // console.log(id);
+                // document.getElementById(id).classList.add("path");
+            }, 10 * i);
             return;
         }
         setTimeout(() => {
@@ -82,6 +80,20 @@ const animateVisitedNodes = () => {
         }, 10 * i);
     }
 }
+
+const animatePath = () => {
+    console.log(path.length);
+    path.reverse();
+    for (let i = 0; i < path.length; i++) {
+        setTimeout(() => {
+            // const { prow, pcol } = path[i];
+            let id = "node " + path[i].x + " " + path[i].y;
+            console.log(i + ": " + id);
+            document.getElementById(id).classList.add("path");
+        }, 50 * i);
+    }
+}
+
 const addWall = (x, y, event) => {
     if (event.target.classList == "cell start") {
         event.target.classList.remove("start");
@@ -376,6 +388,7 @@ const dfs = () => {
         }
         if (grid[v.row][v.col].visited == false) {
             grid[v.row][v.col].visited = true
+            visitedNodes.push({ row: v.row, col: v.col });
             // let id = "node " + v.col + " " + v.row;
             // document.getElementById(id).classList.add("visited");
             for (let i = 0; i < edges.length; i++) {
@@ -391,7 +404,6 @@ const dfs = () => {
                 if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
                     grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
                     stack.push({ row: edgeY, col: edgeX });
-                    visitedNodes.push({ row: edgeY, col: edgeX });
                 }
             }
         }
