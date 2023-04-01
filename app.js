@@ -82,13 +82,11 @@ const animateVisitedNodes = () => {
 }
 
 const animatePath = () => {
-    console.log(path.length);
-    path.reverse();
-    for (let i = 0; i < path.length; i++) {
+    const proper = path.reverse();
+    for (let i = 0; i < proper.length; i++) {
         setTimeout(() => {
-            // const { prow, pcol } = path[i];
-            let id = "node " + path[i].x + " " + path[i].y;
-            console.log(i + ": " + id);
+            const { row, col } = proper[i];
+            let id = "node " + col + " " + row;
             document.getElementById(id).classList.add("path");
         }, 50 * i);
     }
@@ -116,12 +114,12 @@ const addWall = (x, y, event) => {
         grid[y][x].toString();
     }
     updateStatus();
-    // if (done) {
-    //     bfs();
-    // }
-    // if (done2) {
-    //     dfs();
-    // }
+    if (done) {
+        bfs();
+    }
+    if (done2) {
+        dfs();
+    }
 }
 
 const addStart = (x, y, event) => {
@@ -242,14 +240,12 @@ const resetVisited = () => {
     path = [];
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
-            // if (grid[i][j].visited == true) {
             grid[i][j].visited = false;
             grid[i][j].parent = null;
             let id = "node " + j + " " + i;
             document.getElementById(id).classList.remove("path");
             document.getElementById(id).classList.remove("visited");
             document.getElementById(id).classList.remove("found");
-            // }
         }
     }
 }
@@ -293,28 +289,35 @@ const addStuff = (event) => {
 const createPath = () => {
     try {
         let p = grid[end.y][end.x].parent;
-        path.push({ x: p.col, y: p.row });
-
+        path.push({ row: p.row, col: p.col });
         while (p.parent.parent != null) {
             p = p.parent;
-            path.push({ x: p.col, y: p.row });
+            path.push({ row: p.row, col: p.col });
         }
-        // for (let i = 0; i < path.length; i++) {
-        //     let id = "node " + path[i].x + " " + path[i].y;
-        //     document.getElementById(id).classList.add("path");
-        // }
     } catch (error) {
         console.log("walled in!");
     }
-    console.log(path);
-    // return path;
+}
+const recreateVisual = () => {
+    console.log("visited: " + visitedNodes.length + "\npath: " + path.length);
+    for (let i = 0; i < visitedNodes.length; i++) {
+        const { row, col } = visitedNodes[i];
+        let id = "node " + col + " " + row;
+        console.log(id);
+        document.getElementById(id).classList.add("visited");
+    }
+    const proper = path.reverse();
+    for (let j = 0; j < proper.length; j++) {
+        const { row, col } = proper[j];
+        let id = "node " + col + " " + row;
+        document.getElementById(id).classList.add("path");
+    }
 }
 
 const bfs = () => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
         alert("undefined start/end point");
-        // break;
         return;
     }
     let queue = [];
@@ -331,8 +334,6 @@ const bfs = () => {
         ]
 
         if (v.row == end.y && v.col == end.x) {
-            // let id = "node " + v.col + " " + v.row;
-            // document.getElementById(id).classList.add("found");
             break;
         }
         for (let i = 0; i < edges.length; i++) {
@@ -347,8 +348,6 @@ const bfs = () => {
             }
             if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
                 grid[edgeY][edgeX].visited = true;
-                // let id = "node " + edgeX + " " + edgeY;
-                // document.getElementById(id).classList.add("visited");
                 grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
                 queue.push({ row: edgeY, col: edgeX });
                 visitedNodes.push({ row: edgeY, col: edgeX });
@@ -357,7 +356,11 @@ const bfs = () => {
 
     }
     createPath();
-    animateVisitedNodes();
+    if (done) {
+        recreateVisual();
+    } else {
+        animateVisitedNodes();
+    }
     done = true;
 }
 // behaving more correctly but doesn't do guarentee shortest path
@@ -365,11 +368,9 @@ const dfs = () => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
         alert("undefined start/end point");
-        // break;
         return;
     }
     let stack = [];
-    // grid[start.y][start.x].visited = true;
     stack.push({ row: start.y, col: start.x });
     visitedNodes.push({ row: start.y, col: start.x });
     while (stack.length > 0) {
@@ -382,15 +383,11 @@ const dfs = () => {
         ]
 
         if (v.row == end.y && v.col == end.x) {
-            // let id = "node " + v.col + " " + v.row;
-            // document.getElementById(id).classList.add("found");
             break;
         }
         if (grid[v.row][v.col].visited == false) {
             grid[v.row][v.col].visited = true
             visitedNodes.push({ row: v.row, col: v.col });
-            // let id = "node " + v.col + " " + v.row;
-            // document.getElementById(id).classList.add("visited");
             for (let i = 0; i < edges.length; i++) {
                 let edgeY = edges[i].y;
                 let edgeX = edges[i].x;
@@ -409,9 +406,13 @@ const dfs = () => {
         }
 
     }
-    done2 = true;
     createPath();
-    animateVisitedNodes();
+    if (done2) {
+        recreateVisual();
+    } else {
+        animateVisitedNodes();
+    }
+    done2 = true;
 }
 randomzieButton.addEventListener("click", () => {
     createRandom();
