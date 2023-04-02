@@ -13,8 +13,9 @@ let end = {
     y: 15
 }
 
-let done = false;
-let done2 = false;
+let bfsCompleted = false;
+let dfsCompleted = false;
+let visualInProgress = false;
 
 let canvas = document.getElementById("canvas");
 const randomzieButton = document.querySelector(".randomzie-button");
@@ -57,10 +58,11 @@ const createCanvas = () => {
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + done + "\ndfs = " + done2;
+    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + bfsCompleted + "\ndfs = " + dfsCompleted;
 }
 
 const animateVisitedNodes = () => {
+    visualInProgress = true;
     for (let i = 0; i <= visitedNodes.length; i++) {
         if (i == visitedNodes.length) {
             setTimeout(() => {
@@ -87,7 +89,11 @@ const animateVisitedNodes = () => {
 
 const animatePath = () => {
     const proper = path.reverse();
-    for (let i = 0; i < proper.length; i++) {
+    for (let i = 0; i <= proper.length; i++) {
+        if (i == proper.length) {
+            visualInProgress = false;
+            return;
+        }
         setTimeout(() => {
             const { row, col } = proper[i];
             let id = "node " + col + " " + row;
@@ -97,6 +103,10 @@ const animatePath = () => {
 }
 
 const addWall = (x, y, event) => {
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    }
     if (event.target.classList == "cell start") {
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
@@ -118,15 +128,19 @@ const addWall = (x, y, event) => {
         grid[y][x].toString();
     }
     updateStatus();
-    if (done) {
+    if (bfsCompleted) {
         bfs();
     }
-    if (done2) {
+    if (dfsCompleted) {
         dfs();
     }
 }
 
 const addStart = (x, y, event) => {
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    }
     if (event.target.classList != "cell start") {
         if (event.target.classList == "cell end") {
             event.target.classList.remove("end");
@@ -147,10 +161,10 @@ const addStart = (x, y, event) => {
         start.x = x;
         start.y = y;
         console.log("new start X: " + start.x + " Y: " + start.y);
-        if (done) {
+        if (bfsCompleted) {
             bfs();
         }
-        if (done2) {
+        if (dfsCompleted) {
             dfs();
         }
     } else { //remove the set wall
@@ -159,11 +173,17 @@ const addStart = (x, y, event) => {
         start.x = undefined;
         start.y = undefined;
         resetVisited();
+        bfsCompleted = false;
+        dfsCompleted = false
     }
     updateStatus();
 }
 
 const addEnd = (x, y, event) => {
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    }
     if (event.target.classList != "cell end") {
         if (event.target.classList == "cell start") {
             event.target.classList.remove("start");
@@ -184,10 +204,10 @@ const addEnd = (x, y, event) => {
         end.x = x;
         end.y = y;
         console.log("new end X: " + end.x + " Y: " + end.y);
-        if (done) {
+        if (bfsCompleted) {
             bfs();
         }
-        if (done2) {
+        if (dfsCompleted) {
             dfs();
         }
     } else {
@@ -196,10 +216,12 @@ const addEnd = (x, y, event) => {
         end.x = undefined;
         end.y = undefined;
         resetVisited();
-        // if (done) {
+        bfsCompleted = false;
+        dfsCompleted = false
+        // if (bfsCompleted) {
         //     bfs();
         // }
-        // if (done2) {
+        // if (dfsCompleted) {
         //     dfs();
         // }
     }
@@ -207,6 +229,10 @@ const addEnd = (x, y, event) => {
 }
 
 const createRandom = () => {
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    }
     resetMap();
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
@@ -222,8 +248,12 @@ const createRandom = () => {
 }
 
 const resetMap = () => {
-    done = false;
-    done2 = false;
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    }
+    bfsCompleted = false;
+    dfsCompleted = false;
     visitedNodes = [];
     path = [];
     for (let i = 0; i < ROWS; i++) {
@@ -248,6 +278,10 @@ const resetMap = () => {
 }
 
 const resetVisited = () => {
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    }
     visitedNodes = [];
     path = [];
     for (let i = 0; i < ROWS; i++) {
@@ -372,12 +406,12 @@ const bfs = () => {
 
     }
     createPath();
-    if (done) {
+    if (bfsCompleted) {
         recreateVisual();
     } else {
         animateVisitedNodes();
     }
-    done = true;
+    bfsCompleted = true;
 }
 // behaving more correctly but doesn't do guarentee shortest path
 const dfs = () => {
@@ -423,12 +457,12 @@ const dfs = () => {
 
     }
     createPath();
-    if (done2) {
+    if (dfsCompleted) {
         recreateVisual();
     } else {
         animateVisitedNodes();
     }
-    done2 = true;
+    dfsCompleted = true;
 }
 randomzieButton.addEventListener("click", () => {
     createRandom();
@@ -437,14 +471,24 @@ resetMapButton.addEventListener("click", () => {
     resetMap();
 });
 bfsButton.addEventListener("click", () => {
-    done = false;
-    done2 = false;
-    bfs();
-    updateStatus();
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    } else {
+        bfsCompleted = false;
+        dfsCompleted = false;
+        bfs();
+        updateStatus();
+    }
 });
 dfsButton.addEventListener("click", () => {
-    done = false;
-    done2 = false;
-    dfs();
-    updateStatus();
+    if (visualInProgress) {
+        alert("visualization in progress");
+        return;
+    } else {
+        bfsCompleted = false;
+        dfsCompleted = false;
+        dfs();
+        updateStatus();
+    }
 });

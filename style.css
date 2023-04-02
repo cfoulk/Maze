@@ -11,20 +11,37 @@
     background-color: white;
     border: 0.5px solid lightblue;
 }
+@keyframes visitedAnimation {
+  /* 0%  {background-color: greenyellow;} */
+  0% {background-color: lightgreen;}
+  50%  {background-color: cyan;}
+  100%   {background-color: darkcyan;}
+}
+
+@keyframes pathAnimation {
+  0%   {background-color: lightpink;}
+  50%  {background-color: lightsalmon;}
+  100% {background-color: gold;}
+}
 
 .visited {
     background-color: darkcyan;
-    border: 0.5px solid darkcyan;
+    /* border: 0.5px solid darkcyan; */
+    animation-name: visitedAnimation;
+    animation-duration: 500ms;
+    opacity: 0.7;
 }
 
 .start {
     background-color: green;
-    border: 0.5px solid green;
+    /* border: 0.5px solid green; */
+    opacity: 0.7;
 }
 
 .end {
     background-color: red;
-    border: 0.5px solid red;
+    /* border: 0.5px solid red; */
+    opacity: 0.7;
 }
 
 .found {
@@ -34,12 +51,15 @@
 
 .path {
     background-color: gold;
-    border: 0.5px solid gold;
+    /* border: 0.5px solid gold; */
+    animation-name: pathAnimation;
+    animation-duration: 500ms;
+    opacity: 0.7;
 }
 
 .wall {
     background-color: darkblue;
-    border: 0.5px solid darkblue;
+    /* border: 0.5px solid darkblue; */
 }
 
 .btn-group {
