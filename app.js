@@ -18,10 +18,6 @@ let dfsCompleted = false;
 let visualInProgress = false;
 
 let canvas = document.getElementById("canvas");
-const randomzieButton = document.querySelector(".randomzie-button");
-const resetMapButton = document.querySelector(".reset-button");
-const bfsButton = document.querySelector(".bfs-button");
-const dfsButton = document.querySelector(".dfs-button");
 
 let grid = [];
 let visitedNodes = [];
@@ -127,10 +123,10 @@ const addWall = (x, y, event) => {
     }
     updateStatus();
     if (bfsCompleted) {
-        bfs();
+        bfs(true);
     }
     if (dfsCompleted) {
-        dfs();
+        dfs(true);
     }
 }
 
@@ -144,8 +140,6 @@ const addStart = (x, y, event) => {
             event.target.classList.remove("end");
             grid[y][x].setEnd(false);
             end = { x: undefined, y: undefined };
-            // end.x = undefined;
-            // end.y = undefined;
         }
         if (start.x != undefined && start.y != undefined) {
             console.log("old start X: " + start.x + " Y: " + start.y);
@@ -158,21 +152,17 @@ const addStart = (x, y, event) => {
         grid[y][x].setStart(true);
         grid[y][x].setWall(false);
         start = { x: x, y: y };
-        // start.x = x;
-        // start.y = y;
         console.log("new start X: " + start.x + " Y: " + start.y);
         if (bfsCompleted) {
-            bfs();
+            bfs(true);
         }
         if (dfsCompleted) {
-            dfs();
+            dfs(true);
         }
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
         end = { x: undefined, y: undefined };
-        // start.x = undefined;
-        // start.y = undefined;
         resetVisited();
         bfsCompleted = false;
         dfsCompleted = false
@@ -190,8 +180,6 @@ const addEnd = (x, y, event) => {
             event.target.classList.remove("start");
             grid[y][x].setStart(false);
             start = { x: undefined, y: undefined };
-            // start.x = undefined;
-            // start.y = undefined;
         }
         if (end.x != undefined && end.y != undefined) {
             console.log("old end X: " + end.x + " Y: " + end.y);
@@ -204,21 +192,17 @@ const addEnd = (x, y, event) => {
         grid[y][x].setEnd(true);
         grid[y][x].setWall(false);
         end = { x: x, y: y };
-        // end.x = x;
-        // end.y = y;
         console.log("new end X: " + end.x + " Y: " + end.y);
         if (bfsCompleted) {
-            bfs();
+            bfs(true);
         }
         if (dfsCompleted) {
-            dfs();
+            dfs(true);
         }
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
         end = { x: undefined, y: undefined };
-        // end.x = undefined;
-        // end.y = undefined;
         resetVisited();
         bfsCompleted = false;
         dfsCompleted = false
@@ -368,7 +352,7 @@ const recreateVisual = () => {
     }
 }
 
-const bfs = () => {
+const bfs = (completed) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
         alert("undefined start/end point");
@@ -408,7 +392,7 @@ const bfs = () => {
 
     }
     createPath();
-    if (bfsCompleted) {
+    if (completed) {
         recreateVisual();
     } else {
         animateVisitedNodes();
@@ -416,7 +400,7 @@ const bfs = () => {
     bfsCompleted = true;
 }
 
-const dfs = () => {
+const dfs = (completed) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
         alert("undefined start/end point");
@@ -457,38 +441,12 @@ const dfs = () => {
 
     }
     createPath();
-    if (dfsCompleted) {
+    if (completed) {
         recreateVisual();
     } else {
         animateVisitedNodes();
     }
     dfsCompleted = true;
 }
-randomzieButton.addEventListener("click", () => {
-    createRandom();
-});
-resetMapButton.addEventListener("click", () => {
-    resetMap();
-});
-bfsButton.addEventListener("click", () => {
-    if (visualInProgress) {
-        alert("visualization in progress");
-        return;
-    } else {
-        bfsCompleted = false;
-        dfsCompleted = false;
-        bfs();
-        updateStatus();
-    }
-});
-dfsButton.addEventListener("click", () => {
-    if (visualInProgress) {
-        alert("visualization in progress");
-        return;
-    } else {
-        bfsCompleted = false;
-        dfsCompleted = false;
-        dfs();
-        updateStatus();
-    }
-});
+
+export { dfs, bfs, resetMap, resetVisited, visualInProgress, createRandom, updateStatus }; 
