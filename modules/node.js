@@ -25,7 +25,7 @@ export default class Node {
     }
 
     setVisited(b) {
-        this.visted = b;
+        this.visited = b;
     }
 
     setParent(b) {

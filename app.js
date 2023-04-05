@@ -88,14 +88,14 @@ const animateVisitedNodes = () => {
 }
 
 const animatePath = () => {
-    const proper = path.reverse();
-    for (let i = 0; i <= proper.length; i++) {
-        if (i == proper.length) {
+    const pathInOrder = path.reverse();
+    for (let i = 0; i <= pathInOrder.length; i++) {
+        if (i == pathInOrder.length) {
             visualInProgress = false;
             return;
         }
         setTimeout(() => {
-            const { row, col } = proper[i];
+            const { row, col } = pathInOrder[i];
             let id = "node " + col + " " + row;
             document.getElementById(id).classList.add("path");
         }, 25 * i);
@@ -110,13 +110,11 @@ const addWall = (x, y, event) => {
     if (event.target.classList == "cell start") {
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        start.x = undefined;
-        start.y = undefined;
+        start = { x: undefined, y: undefined };
     } else if (event.target.classList == "cell end") {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
-        end.x = undefined;
-        end.y = undefined;
+        end = { x: undefined, y: undefined };
     }
     if (event.target.classList != "cell wall") {
         event.target.classList.add("wall");
@@ -145,8 +143,9 @@ const addStart = (x, y, event) => {
         if (event.target.classList == "cell end") {
             event.target.classList.remove("end");
             grid[y][x].setEnd(false);
-            end.x = undefined;
-            end.y = undefined;
+            end = { x: undefined, y: undefined };
+            // end.x = undefined;
+            // end.y = undefined;
         }
         if (start.x != undefined && start.y != undefined) {
             console.log("old start X: " + start.x + " Y: " + start.y);
@@ -158,8 +157,9 @@ const addStart = (x, y, event) => {
         event.target.classList.add("start");
         grid[y][x].setStart(true);
         grid[y][x].setWall(false);
-        start.x = x;
-        start.y = y;
+        start = { x: x, y: y };
+        // start.x = x;
+        // start.y = y;
         console.log("new start X: " + start.x + " Y: " + start.y);
         if (bfsCompleted) {
             bfs();
@@ -170,8 +170,9 @@ const addStart = (x, y, event) => {
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        start.x = undefined;
-        start.y = undefined;
+        end = { x: undefined, y: undefined };
+        // start.x = undefined;
+        // start.y = undefined;
         resetVisited();
         bfsCompleted = false;
         dfsCompleted = false
@@ -188,8 +189,9 @@ const addEnd = (x, y, event) => {
         if (event.target.classList == "cell start") {
             event.target.classList.remove("start");
             grid[y][x].setStart(false);
-            start.x = undefined;
-            start.y = undefined;
+            start = { x: undefined, y: undefined };
+            // start.x = undefined;
+            // start.y = undefined;
         }
         if (end.x != undefined && end.y != undefined) {
             console.log("old end X: " + end.x + " Y: " + end.y);
@@ -201,8 +203,9 @@ const addEnd = (x, y, event) => {
         event.target.classList.add("end");
         grid[y][x].setEnd(true);
         grid[y][x].setWall(false);
-        end.x = x;
-        end.y = y;
+        end = { x: x, y: y };
+        // end.x = x;
+        // end.y = y;
         console.log("new end X: " + end.x + " Y: " + end.y);
         if (bfsCompleted) {
             bfs();
@@ -213,8 +216,9 @@ const addEnd = (x, y, event) => {
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
-        end.x = undefined;
-        end.y = undefined;
+        end = { x: undefined, y: undefined };
+        // end.x = undefined;
+        // end.y = undefined;
         resetVisited();
         bfsCompleted = false;
         dfsCompleted = false
@@ -260,16 +264,16 @@ const resetMap = () => {
         for (let j = 0; j < COLS; j++) {
             if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
                 grid[i][j].setWall(false);
-                grid[i][j].visited = false;
-                grid[i][j].parent = null;
+                grid[i][j].setVisited(false);
+                grid[i][j].setParent(null);
                 let id = "node " + j + " " + i;
                 document.getElementById(id).classList.remove("wall");
                 document.getElementById(id).classList.remove("visited");
                 document.getElementById(id).classList.remove("path");
             } else {
                 let id = "node " + j + " " + i;
-                grid[i][j].visited = false;
-                grid[i][j].parent = null;
+                grid[i][j].setVisited(false);
+                grid[i][j].setParent(null);
                 document.getElementById(id).classList.remove("visited");
                 document.getElementById(id).classList.remove("found");
             }
@@ -286,8 +290,8 @@ const resetVisited = () => {
     path = [];
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
-            grid[i][j].visited = false;
-            grid[i][j].parent = null;
+            grid[i][j].setVisited(false);
+            grid[i][j].setParent(null);
             let id = "node " + j + " " + i;
             document.getElementById(id).classList.remove("path");
             document.getElementById(id).classList.remove("visited");
@@ -356,9 +360,9 @@ const recreateVisual = () => {
             document.getElementById(id).classList.add("visited");
         }
     }
-    const proper = path.reverse();
-    for (let j = 0; j < proper.length; j++) {
-        const { row, col } = proper[j];
+    const pathInOrder = path.reverse();
+    for (let j = 0; j < pathInOrder.length; j++) {
+        const { row, col } = pathInOrder[j];
         let id = "node " + col + " " + row;
         document.getElementById(id).classList.add("path");
     }
@@ -371,7 +375,7 @@ const bfs = () => {
         return;
     }
     let queue = [];
-    grid[start.y][start.x].visited = true;
+    grid[start.y][start.x].setVisited(true);
     queue.push({ row: start.y, col: start.x });
     visitedNodes.push({ row: start.y, col: start.x });
     while (queue.length > 0) {
@@ -387,9 +391,7 @@ const bfs = () => {
             break;
         }
         for (let i = 0; i < edges.length; i++) {
-            let edgeY = edges[i].y;
-            let edgeX = edges[i].x;
-
+            const { y: edgeY, x: edgeX } = edges[i];
             if (edgeY < 0 || edgeY > ROWS - 1) {
                 continue;
             }
@@ -397,7 +399,7 @@ const bfs = () => {
                 continue;
             }
             if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
-                grid[edgeY][edgeX].visited = true;
+                grid[edgeY][edgeX].setVisited(true);
                 grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
                 queue.push({ row: edgeY, col: edgeX });
                 visitedNodes.push({ row: edgeY, col: edgeX });
@@ -413,7 +415,7 @@ const bfs = () => {
     }
     bfsCompleted = true;
 }
-// behaving more correctly but doesn't do guarentee shortest path
+
 const dfs = () => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
@@ -436,12 +438,10 @@ const dfs = () => {
             break;
         }
         if (grid[v.row][v.col].visited == false) {
-            grid[v.row][v.col].visited = true
+            grid[v.row][v.col].setVisited(true);
             visitedNodes.push({ row: v.row, col: v.col });
             for (let i = 0; i < edges.length; i++) {
-                let edgeY = edges[i].y;
-                let edgeX = edges[i].x;
-
+                const { y: edgeY, x: edgeX } = edges[i];
                 if (edgeY < 0 || edgeY > ROWS - 1) {
                     continue;
                 }
