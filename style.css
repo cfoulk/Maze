@@ -14,6 +14,7 @@
 @keyframes visitedAnimation {
   /* 0%  {background-color: greenyellow;} */
   0% {background-color: lightgreen;}
+  /* 10%  {background-color: lightcyan;} */
   50%  {background-color: cyan;}
   100%   {background-color: darkcyan;}
 }
