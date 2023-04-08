@@ -71,7 +71,7 @@ const createCanvas = () => {
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + bfsCompleted + "\ndfs = " + dfsCompleted;
+    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + bfsCompleted + "\ndfs = " + dfsCompleted + "\nvisualInProgress = " + visualInProgress;
 }
 
 const addWall = (x, y, event) => {
@@ -119,7 +119,7 @@ const addStart = (x, y, event) => {
             end = { x: undefined, y: undefined };
         }
         if (start.x != undefined && start.y != undefined) {
-            console.log("old start X: " + start.x + " Y: " + start.y);
+            // console.log("old start X: " + start.x + " Y: " + start.y);
             let id = "node " + start.x + " " + start.y;
             document.getElementById(id).classList.remove("start");
             grid[start.y][start.x].setStart(false);
@@ -129,7 +129,7 @@ const addStart = (x, y, event) => {
         grid[y][x].setStart(true);
         grid[y][x].setWall(false);
         start = { x: x, y: y };
-        console.log("new start X: " + start.x + " Y: " + start.y);
+        // console.log("new start X: " + start.x + " Y: " + start.y);
         if (bfsCompleted) {
             bfs(true, grid);
         }
@@ -139,7 +139,7 @@ const addStart = (x, y, event) => {
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        end = { x: undefined, y: undefined };
+        start = { x: undefined, y: undefined };
         resetVisited();
         resetCompleted();
     }
@@ -158,7 +158,7 @@ const addEnd = (x, y, event) => {
             start = { x: undefined, y: undefined };
         }
         if (end.x != undefined && end.y != undefined) {
-            console.log("old end X: " + end.x + " Y: " + end.y);
+            // console.log("old end X: " + end.x + " Y: " + end.y);
             let id = "node " + end.x + " " + end.y;
             document.getElementById(id).classList.remove("end");
             grid[end.y][end.x].setEnd(false);
@@ -168,7 +168,7 @@ const addEnd = (x, y, event) => {
         grid[y][x].setEnd(true);
         grid[y][x].setWall(false);
         end = { x: x, y: y };
-        console.log("new end X: " + end.x + " Y: " + end.y);
+        // console.log("new end X: " + end.x + " Y: " + end.y);
         if (bfsCompleted) {
             bfs(true, grid);
         }
@@ -210,7 +210,7 @@ const resetMap = () => {
         return;
     }
     visitedNodes = [];
-    path = [];
+    // path = [];
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
@@ -238,7 +238,7 @@ const resetVisited = () => {
         return;
     }
     visitedNodes = [];
-    path = [];
+    // path = [];
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             grid[i][j].setVisited(false);
@@ -253,16 +253,18 @@ const resetVisited = () => {
 
 const createPath = () => {
     try {
+        let path = [];
         let p = grid[end.y][end.x].parent;
         path.push({ row: p.row, col: p.col });
         while (p.parent.parent != null) {
             p = p.parent;
             path.push({ row: p.row, col: p.col });
         }
+        return path;
     } catch (error) {
         console.log("walled in!");
+        return [];
     }
-    return path;
 }
 
 createCanvas();
