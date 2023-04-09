@@ -10,9 +10,9 @@
 .cell {
     background-color: white;
     border: 0.5px solid lightblue;
-    /* position: absolute; */
-    /* width: 20px; */
-    /* height: 20px; */
+    position: absolute;
+    width: 20px;
+    height: 20px;
 }
 @keyframes visitedAnimation {
   /* 0%  {background-color: greenyellow;} */

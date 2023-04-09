@@ -1,6 +1,7 @@
-import { visitedNodes, ROWS, COLS, resetVisited, createPath }  from '../../app.js'
+import { visitedNodes, ROWS, COLS, resetVisited }  from '../../app.js'
 import { animateVisitedNodes, recreateVisual } from '../animations/animateAlgos.js'
-import { start, end, resetCompleted } from '../buttons.js';
+import { start, end, resetCompleted } from '../controller.js';
+import { createPath } from "./path.js";
 
 export const dfs = (completed, grid) => {
     resetVisited();
@@ -43,7 +44,7 @@ export const dfs = (completed, grid) => {
         }
 
     }
-    let path = createPath();
+    let path = createPath(grid, end);
     if (completed) {
         recreateVisual(visitedNodes, path);
     } else {

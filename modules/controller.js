@@ -1,7 +1,8 @@
-import { grid, createRandom, resetMap, updateStatus } from '../app.js'
+import { grid, resetMap, resetVisited, updateStatus } from '../app.js'
 import { bfs } from './algorithms/breadthFirstSearch.js'
 import { dfs } from './algorithms/depthFirstSearch.js'
 import { visualInProgress } from "./animations/animateAlgos.js";
+import { createRandom } from "./mazeCreation/randomMaze.js";
 
 export let start = {
     x: 10,
