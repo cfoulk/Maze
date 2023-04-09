@@ -1,5 +1,5 @@
-import { start, end, updateStatus } from '../../app.js'
-
+import { updateStatus } from '../../app.js'
+import { start, end  } from "../buttons.js";
 export let visualInProgress = false;
 
 export const animateVisitedNodes = (visitedNodes, path) => {
@@ -38,7 +38,6 @@ export const animatePath = (path) => {
                 document.getElementById(id).classList.add("path");
             }, 25 * i);
         }
-
     } else {
         console.log("no path!");
         visualInProgress = false;

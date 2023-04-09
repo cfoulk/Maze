@@ -1,10 +1,12 @@
-import { start, end, visitedNodes, ROWS, COLS, resetVisited, createPath }  from '../../app.js'
+import { visitedNodes, ROWS, COLS, resetVisited, createPath }  from '../../app.js'
 import { animateVisitedNodes, recreateVisual } from '../animations/animateAlgos.js'
+import { start, end, resetCompleted } from '../buttons.js';
 
 export const bfs = (completed, grid) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
         alert("undefined start/end point");
+        resetCompleted();
         return;
     }
     let queue = [];
