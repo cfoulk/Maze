@@ -7,27 +7,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maze</title>
     <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="./styles/cells.css">
     <link rel="icon" type="iamge/x-icon" href="favicon/favicon.ico" />
 </head>
 
 <body>
-    <div class="btn-group">
-        <!--walls button is the default-->
-        <button class="walls-button selected">WALLS</button>
-        <button class="start-button">START</button>
-        <button class="end-button">END</button>
-        <button class="randomzie-button">randomize</button>
-        <button class="reset-button">reset</button>
-        <button class="bfs-button">bfs</button>
-        <button class="dfs-button">dfs</button>
+    <div id="navbar">
+        <ul>
+            <li><span>Home</span></li>
+            <li><span>Algorithms</span></li>
+            <li><span>Mazes</span></li>
+            <li><span>Visualize</span></li>
+        </ul>
     </div>
-    <div id="status" style="white-space: pre-line"> </div>
-    <div id="canvas"></div>
+    <div id="banner">
+        <div id="btn-group">
+            <!--walls button is the default-->
+            <button class="walls-button selected">WALLS</button>
+            <button class="start-button">START</button>
+            <button class="end-button">END</button>
+            <button class="randomzie-button">randomize</button>
+            <button class="reset-button">reset</button>
+            <button class="bfs-button">bfs</button>
+            <button class="dfs-button">dfs</button>
+        </div>
+    </div>
+    <div id="canvas-wrapper">
+        <div id="canvas"></div>
+    </div>
+    <div id="footer">
+        <div id="status"></div>
+    </div>
     <script type="module" src="./app.js"></script>
     <script type="module" src="./modules/node.js"></script>
     <script type="module" src="./modules/controller.js"></script>
     <script type="module" src="./modules/animations/animateAlgos.js"></script>
     <script type="module" src="./modules/mazeCreation/randomMaze.js"></script>
+    <script type="module" src="./modules/mazeCreation/resetMap.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
-import { visitedNodes, ROWS, COLS, resetVisited }  from '../../app.js'
+import { visitedNodes, ROWS, COLS, start, end }  from '../../app.js'
 import { animateVisitedNodes, recreateVisual } from '../animations/animateAlgos.js'
-import { start, end, resetCompleted } from '../controller.js';
+import { resetCompleted } from '../controller.js';
 import { createPath } from "./path.js";
+import { resetVisited } from "../mazeCreation/resetMap.js";
 
 export const bfs = (completed, grid) => {
     resetVisited();
@@ -38,7 +39,7 @@ export const bfs = (completed, grid) => {
                 grid[edgeY][edgeX].setVisited(true);
                 grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
                 queue.push({ row: edgeY, col: edgeX });
-                visitedNodes.push({ row: edgeY, col: edgeX });
+                visitedNodes.push({ row: parseInt(edgeY), col: parseInt(edgeX) });
             }
         }
 

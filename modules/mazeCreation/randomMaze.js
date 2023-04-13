@@ -1,5 +1,6 @@
 import { visualInProgress } from "../animations/animateAlgos.js";
-import { grid, ROWS, COLS, resetMap } from "../../app.js";
+import { grid, ROWS, COLS } from "../../app.js";
+import { resetMap } from "./resetMap.js";
 
 export const createRandom = () => {
     if (visualInProgress) {

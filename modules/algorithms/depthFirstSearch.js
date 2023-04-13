@@ -1,7 +1,8 @@
-import { visitedNodes, ROWS, COLS, resetVisited }  from '../../app.js'
+import { visitedNodes, ROWS, COLS, start, end }  from '../../app.js'
 import { animateVisitedNodes, recreateVisual } from '../animations/animateAlgos.js'
-import { start, end, resetCompleted } from '../controller.js';
+import { resetCompleted } from '../controller.js';
 import { createPath } from "./path.js";
+import { resetVisited } from "../mazeCreation/resetMap.js";
 
 export const dfs = (completed, grid) => {
     resetVisited();
@@ -12,7 +13,7 @@ export const dfs = (completed, grid) => {
     }
     let stack = [];
     stack.push({ row: start.y, col: start.x });
-    visitedNodes.push({ row: start.y, col: start.x });
+    // visitedNodes.push({ row: start.y, col: start.x });
     while (stack.length > 0) {
         let v = stack.pop();
         let edges = [
@@ -27,7 +28,7 @@ export const dfs = (completed, grid) => {
         }
         if (grid[v.row][v.col].visited == false) {
             grid[v.row][v.col].setVisited(true);
-            visitedNodes.push({ row: v.row, col: v.col });
+            visitedNodes.push({ row: parseInt(v.row), col: parseInt(v.col) });
             for (let i = 0; i < edges.length; i++) {
                 const { y: edgeY, x: edgeX } = edges[i];
                 if (edgeY < 0 || edgeY > ROWS - 1) {
@@ -38,7 +39,7 @@ export const dfs = (completed, grid) => {
                 }
                 if (grid[edgeY][edgeX].visited == false && grid[edgeY][edgeX].isWall == false) {
                     grid[edgeY][edgeX].setParent(grid[v.row][v.col]);
-                    stack.push({ row: edgeY, col: edgeX });
+                    stack.push({ row: parseInt(edgeY), col: parseInt(edgeX) });
                 }
             }
         }

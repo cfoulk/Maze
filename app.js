@@ -1,14 +1,24 @@
 import Node from "./modules/node.js"
-import { start, end, addStuff, bfsCompleted, dfsCompleted } from "./modules/controller.js"
+import { addStuff, bfsCompleted, dfsCompleted } from "./modules/controller.js"
 import { visualInProgress } from "./modules/animations/animateAlgos.js";
 
-let ROWS = 30;
-let COLS = 50;
-let PIXEL = 20;
+const COLS = 50; // 50
+const ROWS = 30; // 30
+
+let width = (1/COLS) * 100;
+let height = (1/ROWS) * 100;
+let start = {
+    x: Math.floor(COLS * 0.2), //10,15
+    y: ROWS * 0.5
+}
+let end = {
+    x: Math.floor(COLS * 0.8), //40, 15
+    y: ROWS * 0.5
+}
 
 let mouseDown = false;
 
-const board = document.getElementById("canvas"); // useless?
+const board = document.getElementById("canvas"); 
 
 let grid = [];
 let visitedNodes = [];
@@ -23,8 +33,10 @@ const createCanvas = () => {
             squareNode.setAttribute("data-x", j);
             squareNode.setAttribute("data-y", i);
             squareNode.classList.add("cell");
-            squareNode.style.left = j * PIXEL + "px";
-            squareNode.style.top = i * PIXEL + "px";
+            squareNode.style.width = width.toFixed(2) + '%';
+            squareNode.style.height = height.toFixed(2)  + '%';
+            squareNode.style.left = j  * width.toFixed(2)  + '%';
+            squareNode.style.top = i * height.toFixed(2)  + '%';
             if (j == start.x && i == start.y) {
                 squareNode.classList.add("start");
                 currRow[j].setStart(true);
@@ -61,52 +73,8 @@ const updateStatus = () => {
     document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + bfsCompleted + "\ndfs = " + dfsCompleted + "\nvisualInProgress = " + visualInProgress;
 }
 
-const resetMap = () => {
-    if (visualInProgress) {
-        alert("visualization in progress");
-        return;
-    }
-    visitedNodes = [];
-    for (let i = 0; i < ROWS; i++) {
-        for (let j = 0; j < COLS; j++) {
-            if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
-                grid[i][j].setWall(false);
-                grid[i][j].setVisited(false);
-                grid[i][j].setParent(null);
-                let id = "node " + j + " " + i;
-                document.getElementById(id).classList.remove("wall");
-                document.getElementById(id).classList.remove("visited");
-                document.getElementById(id).classList.remove("path");
-            } else {
-                let id = "node " + j + " " + i;
-                grid[i][j].setVisited(false);
-                grid[i][j].setParent(null);
-                document.getElementById(id).classList.remove("visited");
-                document.getElementById(id).classList.remove("found");
-            }
-        }
-    }
-}
-
-const resetVisited = () => {
-    if (visualInProgress) {
-        alert("visualization in progress");
-        return;
-    }
-    visitedNodes = [];
-    for (let i = 0; i < ROWS; i++) {
-        for (let j = 0; j < COLS; j++) {
-            grid[i][j].setVisited(false);
-            grid[i][j].setParent(null);
-            let id = "node " + j + " " + i;
-            document.getElementById(id).classList.remove("path");
-            document.getElementById(id).classList.remove("visited");
-            document.getElementById(id).classList.remove("found");
-        }
-    }
-}
 
 createCanvas();
 updateStatus();
 
-export { grid, visitedNodes, ROWS, COLS, resetMap, resetVisited, updateStatus }; 
+export { grid, visitedNodes, start, end, ROWS, COLS, updateStatus }; 

@@ -1,17 +1,20 @@
-import { grid, resetMap, resetVisited, updateStatus } from '../app.js'
+import { grid, updateStatus, start, end } from '../app.js'
 import { bfs } from './algorithms/breadthFirstSearch.js'
 import { dfs } from './algorithms/depthFirstSearch.js'
 import { visualInProgress } from "./animations/animateAlgos.js";
 import { createRandom } from "./mazeCreation/randomMaze.js";
+import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
 
-export let start = {
-    x: 10,
-    y: 15
-}
-export let end = {
-    x: 40,
-    y: 15
-}
+// // perhaps should not have split this from app.js
+// export let start = {
+//     x: 10, //10,15
+//     y: 15
+// }
+// export let end = {
+//     x: 40, //40, 15
+//     y: 15
+// }
+
 export let currentSetting = "WALL";
 export let bfsCompleted = false;
 export let dfsCompleted = false;
@@ -110,11 +113,13 @@ const addWall = (x, y, event) => {
     if (event.target.classList == "cell start") {
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        start = { x: undefined, y: undefined };
+        start.x = undefined;
+        start.y = undefined;
     } else if (event.target.classList == "cell end") {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
-        end = { x: undefined, y: undefined };
+        end.x = undefined;
+        end.y = undefined;
     }
     if (event.target.classList != "cell wall") {
         event.target.classList.add("wall");
@@ -143,8 +148,10 @@ const addStart = (x, y, event) => {
     if (event.target.classList != "cell start") {
         if (event.target.classList == "cell end") {
             event.target.classList.remove("end");
-            grid[y][x].setEnd(false);
-            end = { x: undefined, y: undefined };
+            // grid[y][x].setEnd(false);
+            grid[y][x]["isEnd"] = false; // this works!
+            end.x = undefined;
+            end.y = undefined;
         }
         if (start.x != undefined && start.y != undefined) {
             // console.log("old start X: " + start.x + " Y: " + start.y);
@@ -156,7 +163,9 @@ const addStart = (x, y, event) => {
         event.target.classList.add("start");
         grid[y][x].setStart(true);
         grid[y][x].setWall(false);
-        start = { x: x, y: y };
+        start.x = x;
+        start.y = y;
+        // grid[y][x].toString();
         // console.log("new start X: " + start.x + " Y: " + start.y);
         if (bfsCompleted) {
             bfs(true, grid);
@@ -167,7 +176,8 @@ const addStart = (x, y, event) => {
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
-        start = { x: undefined, y: undefined };
+        start.x = undefined;
+        start.y = undefined;
         resetVisited();
         resetCompleted();
     }
@@ -183,7 +193,8 @@ const addEnd = (x, y, event) => {
         if (event.target.classList == "cell start") {
             event.target.classList.remove("start");
             grid[y][x].setStart(false);
-            start = { x: undefined, y: undefined };
+            start.x = undefined;
+            start.y = undefined;
         }
         if (end.x != undefined && end.y != undefined) {
             // console.log("old end X: " + end.x + " Y: " + end.y);
@@ -195,7 +206,8 @@ const addEnd = (x, y, event) => {
         event.target.classList.add("end");
         grid[y][x].setEnd(true);
         grid[y][x].setWall(false);
-        end = { x: x, y: y };
+        end.x = x;
+        end.y = y;
         // console.log("new end X: " + end.x + " Y: " + end.y);
         if (bfsCompleted) {
             bfs(true, grid);
@@ -206,7 +218,8 @@ const addEnd = (x, y, event) => {
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
-        end = { x: undefined, y: undefined };
+        end.x = undefined;
+        end.y = undefined;
         resetVisited();
         resetCompleted();
     }
