@@ -5,26 +5,19 @@ import { visualInProgress } from "./animations/animateAlgos.js";
 import { createRandom } from "./mazeCreation/randomMaze.js";
 import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
 
-// // perhaps should not have split this from app.js
-// export let start = {
-//     x: 10, //10,15
-//     y: 15
-// }
-// export let end = {
-//     x: 40, //40, 15
-//     y: 15
-// }
-
 export let currentSetting = "WALL";
 export let bfsCompleted = false;
 export let dfsCompleted = false;
 export const wallsButton = document.querySelector(".walls-button");
 export const startButton = document.querySelector(".start-button");
 export const endButton = document.querySelector(".end-button");
-export const randomzieButton = document.querySelector(".randomzie-button");
-export const resetMapButton = document.querySelector(".reset-button");
-export const bfsButton = document.querySelector(".bfs-button");
-export const dfsButton = document.querySelector(".dfs-button");
+export const randomzieButton = document.querySelector("#randomize-button");
+export const resetMapButton = document.querySelector("#reset-button");
+export const bfsButton = document.querySelector("#bfs-button");
+export const dfsButton = document.querySelector("#dfs-button");
+// work on namees
+export const draggableDiagonostics = document.querySelector("#status");
+export const diagnostricsBtn = document.querySelector("#diagnosticsButton");
 
 export const addStuff = (event) => {
     if (currentSetting == "WALL") {
@@ -103,6 +96,67 @@ dfsButton.addEventListener("click", () => {
         dfs(false, grid);
         updateStatus();
     }
+});
+
+diagnostricsBtn.addEventListener("click", (e) => {
+    // e.preventDefault();
+    if (draggableDiagonostics.style.display == 'none') {
+        draggableDiagonostics.style.display = 'block';
+    } else {
+        draggableDiagonostics.style.display = 'none';
+    }
+});
+
+// draggableDiagonostics.addEventListener("touchstart", (event) => {
+//     event.preventDefault();
+//     let pos3 = event.clientX;
+//     let pos4 = event.clientY;
+//     document.ontouchend = closeDragElement;
+//     document.ontouchmove = elementDrag;
+
+//     function elementDrag(e) {
+//         e = e || window.event;
+//         e.preventDefault();
+//         // draggableDiagonostics.style.padding = "20px";
+//         let pos1 = pos3 - e.clientX;
+//         let pos2 = pos4 - e.clientY;
+//         pos3 = e.clientX;
+//         pos4 = e.clientY;
+
+//         draggableDiagonostics.style.left = `${draggableDiagonostics.offsetLeft - pos1}px`;
+//         draggableDiagonostics.style.top = `${draggableDiagonostics.offsetTop - pos2}px`;
+//     }
+
+//     function closeDragElement() {
+//         document.ontouchend = null;
+//         document.ontouchmove = null;
+//     }
+// });
+
+draggableDiagonostics.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+    let pos3 = event.clientX;
+    let pos4 = event.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        let pos1 = pos3 - e.clientX;
+        let pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        draggableDiagonostics.style.left = `${draggableDiagonostics.offsetLeft - pos1}px`;
+        draggableDiagonostics.style.top = `${draggableDiagonostics.offsetTop - pos2}px`;
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+
 });
 
 const addWall = (x, y, event) => {

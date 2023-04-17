@@ -10,7 +10,7 @@ export const resetMap = () => {
     while(visitedNodes.length > 0) {
         visitedNodes.pop();
     }
-    console.log(visitedNodes);
+    // console.log(visitedNodes);
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {

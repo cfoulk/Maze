@@ -10,12 +10,12 @@
 }
 @keyframes visitedAnimation {
   /* 0%  {background-color: greenyellow;} */
-  0% {background-color: lightgreen;
+  0% {background-color: darkcyan;
   border: .1vw solid #324b40; }
   /* 10%  {background-color: lightcyan;} */
-  50%  {background-color: cyan;
+  50%  {background-color: lightgreen;
   border: .1vw solid #324b40;}
-  100%   {background-color: darkcyan;
+  100%   {background-color: cyan;
   border: .1vw solid #324b40;}
 }
 
@@ -26,7 +26,7 @@
 }
 
 .visited {
-    background-color: darkcyan;
+    background-color: cyan;
     /* border: 0.5px solid darkcyan; */
     animation-name: visitedAnimation;
     animation-duration: 500ms;
@@ -66,8 +66,9 @@
     /* border: 0.5px solid darkblue; */
 }
 
-.selected {
-    background-color: lightblue;
-    border: thin solid darkblue;
-    border-radius: 10%;
-}
+/* selected for buttons */
+/* .selected { */
+/*     background-color: lightblue; */
+/*     border: thin solid darkblue; */
+/*     border-radius: 10%; */
+/* } */

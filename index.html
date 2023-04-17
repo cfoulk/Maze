@@ -3,21 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maze</title>
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" type="text/css" href="./styles/cells.css">
+    <link rel="stylesheet" type="text/css" href="./styles/canvas.css">
     <link rel="icon" type="iamge/x-icon" href="favicon/favicon.ico" />
 </head>
 
 <body>
     <div id="navbar">
         <ul>
-            <li><span>Home</span></li>
-            <li><span>Algorithms</span></li>
-            <li><span>Mazes</span></li>
-            <li><span>Visualize</span></li>
+            <li>
+                <div class="navbar-button">Maze</div>
+            </li>
+            <li>
+                <div class="navbar-button">Algorithms</div>
+                <div class="dropdown-content">
+                    <div id="bfs-button">
+                        Breadth First Search
+                    </div>
+                    <div id="dfs-button">
+                        Depth First Search
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="navbar-button">Mazes</div>
+                <div class="dropdown-content">
+                    <div class="navbar-button" id="randomize-button">Randomize</div>
+                </div>
+            </li>
+            <!-- <li><div class="navbar-button">Visualize</div></li> -->
+            <!-- <li><div class="navbar-button" id="randomize-button">Randomize</div></li> -->
+            <li>
+                <div class="navbar-button" id="reset-button">Reset Map</div>
+            </li>
+            <li id="diagz">
+                <div class="navbar-button" id="diagnosticsButton">Diagnostics</div>
+            </li>
         </ul>
     </div>
     <div id="banner">
@@ -26,17 +50,18 @@
             <button class="walls-button selected">WALLS</button>
             <button class="start-button">START</button>
             <button class="end-button">END</button>
-            <button class="randomzie-button">randomize</button>
-            <button class="reset-button">reset</button>
-            <button class="bfs-button">bfs</button>
-            <button class="dfs-button">dfs</button>
+            <!-- <button class="randomzie-button">randomize</button> -->
+            <!-- <button class="reset-button">reset</button> -->
+            <!-- <button class="bfs-button">bfs</button> -->
+            <!-- <button class="dfs-button">dfs</button> -->
         </div>
     </div>
     <div id="canvas-wrapper">
         <div id="canvas"></div>
     </div>
+    <div id="status" style="display: none;"></div>
     <div id="footer">
-        <div id="status"></div>
+        Created by Charles Foulk
     </div>
     <script type="module" src="./app.js"></script>
     <script type="module" src="./modules/node.js"></script>
