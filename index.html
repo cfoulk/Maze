@@ -15,23 +15,27 @@
     <div id="navbar">
         <ul>
             <li>
-                <div class="navbar-button">Maze</div>
+                <div class="navbar-button">
+                    <a href="." id="logo">Maze</a>
+                </div>
             </li>
             <li>
-                <div class="navbar-button">Algorithms</div>
+                <div class="navbar-button" id="algorithms-button">Algorithms</div>
                 <div class="dropdown-content">
-                    <div id="bfs-button">
+                    <div class="content" id="bfs-button">
                         Breadth First Search
                     </div>
-                    <div id="dfs-button">
+                    <div class="content" id="dfs-button">
                         Depth First Search
                     </div>
                 </div>
             </li>
             <li>
-                <div class="navbar-button">Mazes</div>
+                <div class="navbar-button" id="createmaze-button">Create Maze</div>
                 <div class="dropdown-content">
-                    <div class="navbar-button" id="randomize-button">Randomize</div>
+                    <div class="content" id="randomize-button">
+                        Randomize
+                    </div>
                 </div>
             </li>
             <!-- <li><div class="navbar-button">Visualize</div></li> -->
@@ -39,22 +43,33 @@
             <li>
                 <div class="navbar-button" id="reset-button">Reset Map</div>
             </li>
+            <!-- <li> -->
+            <!--     <div class="navbar-button">Add ...</div> -->
+            <!--     <div class="dropdown-content"> -->
+            <!--         <div class="walls-button selected">Walls</div> -->
+            <!--         <div class="start-button">Start</div> -->
+            <!--         <div class="end-button">End</div> -->
+            <!--     </div> -->
+            <!-- </li> -->
+            <li>
+                <div class="navbar-button selected" id="walls-button">
+                    Add Walls
+                </div>
+            </li>
+            <li>
+                <div class="navbar-button" id="start-button">
+                    Set Start
+                </div>
+            </li>
+            <li>
+                <div class="navbar-button" id="end-button">
+                    Set End
+                </div>
+            </li>
             <li id="diagz">
                 <div class="navbar-button" id="diagnosticsButton">Diagnostics</div>
             </li>
         </ul>
-    </div>
-    <div id="banner">
-        <div id="btn-group">
-            <!--walls button is the default-->
-            <button class="walls-button selected">WALLS</button>
-            <button class="start-button">START</button>
-            <button class="end-button">END</button>
-            <!-- <button class="randomzie-button">randomize</button> -->
-            <!-- <button class="reset-button">reset</button> -->
-            <!-- <button class="bfs-button">bfs</button> -->
-            <!-- <button class="dfs-button">dfs</button> -->
-        </div>
     </div>
     <div id="canvas-wrapper">
         <div id="canvas"></div>

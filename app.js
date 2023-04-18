@@ -1,5 +1,5 @@
 import Node from "./modules/node.js"
-import { addStuff, bfsCompleted, dfsCompleted } from "./modules/controller.js"
+import { addStuff, bfsCompleted, dfsCompleted, currentSetting, currentAlgorithm} from "./modules/controller.js"
 import { visualInProgress } from "./modules/animations/animateAlgos.js";
 
 const COLS = 50; // 50
@@ -65,12 +65,26 @@ const createCanvas = () => {
         nodes.addEventListener("mouseup", () => {
             mouseDown = false;
         });
+        nodes.addEventListener("touchstart", (event) => {
+            event.preventDefault();
+            addStuff(event);
+        });
+        nodes.addEventListener("touchend", () => {
+        });
     }
 }
 
 // messy solution
 const updateStatus = () => {
-    document.getElementById("status").innerHTML = "start (x, y): (" + start.x + ", " + start.y + ")\nend (x, y): (" + end.x + ", " + end.y + ")" + "\nbfs = " + bfsCompleted + "\ndfs = " + dfsCompleted + "\nvisualInProgress = " + visualInProgress;
+    document.getElementById("status").innerHTML = 
+        "Toggle Diagnostics" +
+        "\nstart (x, y): (" + start.x + ", " + start.y + 
+        ")\nend (x, y): (" + end.x + ", " + end.y + ")" + 
+        "\nalgorithm: " + currentAlgorithm + 
+        "\nsetting: " + currentSetting + 
+        // "\nbfs: " + bfsCompleted + 
+        // "\ndfs: " + dfsCompleted + 
+        "\nvisualInProgress: " + visualInProgress;
 }
 
 

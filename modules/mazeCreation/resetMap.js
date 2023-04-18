@@ -41,7 +41,7 @@ export const resetVisited = () => {
     while(visitedNodes.length > 0) {
         visitedNodes.pop();
     }
-    console.log(visitedNodes);
+    // console.log(visitedNodes);
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             grid[i][j].setVisited(false);

@@ -19,56 +19,50 @@ body {
 }
 
 #diagz {
-    /* display: inline-flex; */
     margin-left: auto;
-    /* padding-right: 10px; */
-    /* display: block; */
-    /* width: 50px; */
-    /* grid-column-start: 10; */
 }
 
 ul {
     list-style-type: none;
     padding-left: 0;
     padding-right: 10px;
-    /* height: 100%; */
-    /* top: 0%; */
-    /* margin: auto; */
-    /* padding: 0; */
-    /* box-sizing: border-box; */
     display: flex;
     flex-direction: flex-start;
     flex-wrap: wrap;
     justify-content: start;
     align-items: start;
-    /* margin-left: 0; */
-    column-gap: .5rem;
-
-    /* grid-row-start: 1; */
-    /* grid-template-columns: repeat(10, 1fr); */
-    /* grid-template-rows: 1fr; */
+    column-gap: .7rem;
 } 
 
 li {
-    /* display: inline-flex; */
     font-size: 20px;
     float: left;
     cursor: pointer;
-    /* border: .1rem solid black; */
-    /* background-color: gray; */
-    /* padding-right: 10px; */
     color: black;
-    /* height: 100%; */
-    /* width: 100%; */
-    /* padding: 8px; */
 }
 
 li:hover {
     background-color: #eee;
+    color: #6f244e;
 }
 
-li:hover .dropdown-content {
+/* li:hover .dropdown-content { */
+/*     display: block; */
+/* } */
+
+.navbar-button.show ~ .dropdown-content {
     display: block;
+}
+
+.dropdown-content div:hover {
+    /* background-color: #f1f1f1; */
+    color: #6f244e;
+    /* border: thin solid #6f244e; */
+}
+
+.selected {
+    background-color: lightblue;
+    /* border: thin solid darkblue; */
 }
 
 .dropdown-content div {
@@ -78,7 +72,6 @@ li:hover .dropdown-content {
   display: block;
 }
 
-.dropdown-content div:hover {background-color: #f1f1f1}
 
 @media (max-width: 700px) {
     body {
@@ -102,9 +95,6 @@ li:hover .dropdown-content {
 }
 
 .navbar-button {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
     text-align: center;
     margin: auto;
 }
@@ -123,8 +113,6 @@ li:hover .dropdown-content {
     display: grid;
     grid-template-columns: 15% 70% 15%;
     grid-template-rows: 1fr;
-    /* display: flex; */
-    /* justify-content: start; */
 }
 
 #btn-group {
@@ -134,8 +122,6 @@ li:hover .dropdown-content {
     justify-content: center;
     grid-column-start: 2;
     flex-wrap: nowrap;
-    /* margin-bottom: 20px; */
-    /* order: -1; */
 }
 
 #status {
@@ -160,5 +146,5 @@ li:hover .dropdown-content {
     grid-row-start: 4;
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
 }

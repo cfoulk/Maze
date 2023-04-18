@@ -6,18 +6,23 @@ import { createRandom } from "./mazeCreation/randomMaze.js";
 import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
 
 export let currentSetting = "WALL";
+export let currentAlgorithm = null;
 export let bfsCompleted = false;
 export let dfsCompleted = false;
-export const wallsButton = document.querySelector(".walls-button");
-export const startButton = document.querySelector(".start-button");
-export const endButton = document.querySelector(".end-button");
+export const wallsButton = document.querySelector("#walls-button");
+export const startButton = document.querySelector("#start-button");
+export const endButton = document.querySelector("#end-button");
 export const randomzieButton = document.querySelector("#randomize-button");
 export const resetMapButton = document.querySelector("#reset-button");
 export const bfsButton = document.querySelector("#bfs-button");
 export const dfsButton = document.querySelector("#dfs-button");
 // work on namees
 export const draggableDiagonostics = document.querySelector("#status");
-export const diagnostricsBtn = document.querySelector("#diagnosticsButton");
+export const diagnosticsBtn = document.querySelector("#diagnosticsButton");
+
+export const navbarButton = document.querySelectorAll(".navbar-button");
+export const dropdownContent = document.querySelectorAll(".dropdown-content");
+let inDropdown = false;
 
 export const addStuff = (event) => {
     if (currentSetting == "WALL") {
@@ -39,11 +44,35 @@ export const resetCompleted = () => {
     updateStatus();
 }
 
+for (const navBtn of navbarButton) {
+    navBtn.addEventListener("mouseover", (event) => {
+        event.target.classList.add("show");
+    });
+    navBtn.addEventListener("mouseleave", (event) => {
+        setTimeout(() => {
+            if (!inDropdown) {
+                event.target.classList.remove("show");
+            }
+        }, 20);
+    });
+}
+
+for (const drops of dropdownContent) {
+    drops.addEventListener("mouseenter", () => {
+        inDropdown = true;
+    });
+    drops.addEventListener("mouseleave", () => {
+        drops.parentNode.querySelector(".navbar-button").classList.remove("show");
+        inDropdown = false;
+    });
+}
+
 wallsButton.addEventListener("click", (event) => {
     currentSetting = "WALL";
     startButton.classList.remove("selected");
     endButton.classList.remove("selected");
     event.target.classList.add("selected");
+    updateStatus();
 });
 
 startButton.addEventListener("click", (event) => {
@@ -51,6 +80,7 @@ startButton.addEventListener("click", (event) => {
     wallsButton.classList.remove("selected");
     endButton.classList.remove("selected");
     event.target.classList.add("selected");
+    updateStatus();
 });
 
 endButton.addEventListener("click", (event) => {
@@ -58,14 +88,18 @@ endButton.addEventListener("click", (event) => {
     wallsButton.classList.remove("selected");
     startButton.classList.remove("selected");
     event.target.classList.add("selected");
+    updateStatus();
 });
 
 randomzieButton.addEventListener("click", () => {
+    document.getElementById("createmaze-button").classList.remove("show");
+    currentAlgorithm = null;
     resetCompleted();
     createRandom();
 });
 
 resetMapButton.addEventListener("click", () => {
+    currentAlgorithm = null;
     resetCompleted();
     resetMap();
 });
@@ -73,6 +107,9 @@ resetMapButton.addEventListener("click", () => {
 bfsButton.addEventListener("click", () => {
     dfsButton.classList.remove("selected");
     bfsButton.classList.add("selected");
+    currentAlgorithm = "BFS"
+
+    document.getElementById("algorithms-button").classList.remove("show");
     if (visualInProgress) {
         alert("visualization in progress");
         return;
@@ -87,6 +124,9 @@ bfsButton.addEventListener("click", () => {
 dfsButton.addEventListener("click", () => {
     bfsButton.classList.remove("selected");
     dfsButton.classList.add("selected");
+    currentAlgorithm = "DFS"
+
+    document.getElementById("algorithms-button").classList.remove("show");
     if (visualInProgress) {
         alert("visualization in progress");
         return;
@@ -98,8 +138,7 @@ dfsButton.addEventListener("click", () => {
     }
 });
 
-diagnostricsBtn.addEventListener("click", (e) => {
-    // e.preventDefault();
+diagnosticsBtn.addEventListener("click", () => {
     if (draggableDiagonostics.style.display == 'none') {
         draggableDiagonostics.style.display = 'block';
     } else {
