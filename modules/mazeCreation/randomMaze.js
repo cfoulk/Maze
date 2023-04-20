@@ -1,10 +1,12 @@
 import { visualInProgress } from "../animations/animateAlgos.js";
 import { grid, ROWS, COLS } from "../../app.js";
 import { resetMap } from "./resetMap.js";
+import { outputErrorVisualization } from "../error/visualizationError.js";
 
 export const createRandom = () => {
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     }
     resetMap();

@@ -75,6 +75,11 @@ const createCanvas = () => {
 }
 
 // messy solution
+// could add: 
+// number of visited nodes
+// if end was found
+// total weight of path
+//
 const updateStatus = () => {
     document.getElementById("status").innerHTML = 
         "Toggle Diagnostics" +
@@ -82,8 +87,8 @@ const updateStatus = () => {
         ")\nend (x, y): (" + end.x + ", " + end.y + ")" + 
         "\nalgorithm: " + currentAlgorithm + 
         "\nsetting: " + currentSetting + 
-        // "\nbfs: " + bfsCompleted + 
-        // "\ndfs: " + dfsCompleted + 
+        "\nbfs: " + bfsCompleted + 
+        "\ndfs: " + dfsCompleted + 
         "\nvisualInProgress: " + visualInProgress;
 }
 

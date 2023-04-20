@@ -3,11 +3,13 @@ import { animateVisitedNodes, recreateVisual } from '../animations/animateAlgos.
 import { resetCompleted } from '../controller.js';
 import { createPath } from "./path.js";
 import { resetVisited } from "../mazeCreation/resetMap.js";
+import { outputUndefinedError } from '../error/undefinedError.js';
 
 export const dfs = (completed, grid) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
-        alert("undefined start/end point");
+        // alert("undefined start/end point");
+        outputUndefinedError();
         resetCompleted(); // this could be better, just need to think
         return;
     }

@@ -9,6 +9,36 @@ body {
     grid-template-rows: 5% 5% 85% 5%;
 }
 
+#canvas-wrapper {
+    font-size: 12;
+}
+
+#warning-box {
+    display:none;
+    height:100%;
+    width: 100%;
+    /* background-color: black; */
+    /* align-content: center; */
+    /* margin: auto; */
+    /* justify-content: center; */
+    color: red;
+    font-size: 16px;
+    font-weight: 700;
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+#warning-box.show {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #navbar {
     position: relative;
     height: 100%;

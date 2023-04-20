@@ -1,9 +1,11 @@
 import { ROWS, COLS, grid, visitedNodes } from "../../app.js";
 import { visualInProgress } from "../animations/animateAlgos.js";
+import { outputErrorVisualization } from "../error/visualizationError.js";
 
 export const resetMap = () => {
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     }
     // visitedNodes = [];
@@ -34,7 +36,8 @@ export const resetMap = () => {
 
 export const resetVisited = () => {
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     }
     // visitedNodes = [];

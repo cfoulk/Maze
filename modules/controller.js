@@ -4,6 +4,7 @@ import { dfs } from './algorithms/depthFirstSearch.js'
 import { visualInProgress } from "./animations/animateAlgos.js";
 import { createRandom } from "./mazeCreation/randomMaze.js";
 import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
+import { outputErrorVisualization } from "./error/visualizationError.js";
 
 export let currentSetting = "WALL";
 export let currentAlgorithm = null;
@@ -41,6 +42,7 @@ export const resetCompleted = () => {
     dfsCompleted = false;
     bfsButton.classList.remove("selected");
     dfsButton.classList.remove("selected");
+    randomzieButton.classList.remove("selected");
     updateStatus();
 }
 
@@ -91,10 +93,11 @@ endButton.addEventListener("click", (event) => {
     updateStatus();
 });
 
-randomzieButton.addEventListener("click", () => {
+randomzieButton.addEventListener("click", (event) => {
     document.getElementById("createmaze-button").classList.remove("show");
     currentAlgorithm = null;
     resetCompleted();
+    event.target.classList.add("selected");
     createRandom();
 });
 
@@ -111,7 +114,8 @@ bfsButton.addEventListener("click", () => {
 
     document.getElementById("algorithms-button").classList.remove("show");
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     } else {
         bfsCompleted = true;
@@ -128,7 +132,8 @@ dfsButton.addEventListener("click", () => {
 
     document.getElementById("algorithms-button").classList.remove("show");
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     } else {
         dfsCompleted = true;
@@ -146,31 +151,31 @@ diagnosticsBtn.addEventListener("click", () => {
     }
 });
 
-// draggableDiagonostics.addEventListener("touchstart", (event) => {
-//     event.preventDefault();
-//     let pos3 = event.clientX;
-//     let pos4 = event.clientY;
-//     document.ontouchend = closeDragElement;
-//     document.ontouchmove = elementDrag;
+draggableDiagonostics.addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    let pos3 = event.touches[0].clientX;
+    let pos4 = event.touches[0].clientY;
+    document.ontouchend = closeDragElement;
+    document.ontouchmove = elementDrag;
 
-//     function elementDrag(e) {
-//         e = e || window.event;
-//         e.preventDefault();
-//         // draggableDiagonostics.style.padding = "20px";
-//         let pos1 = pos3 - e.clientX;
-//         let pos2 = pos4 - e.clientY;
-//         pos3 = e.clientX;
-//         pos4 = e.clientY;
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // draggableDiagonostics.style.padding = "20px";
+        let pos1 = pos3 - e.changedTouches[0].clientX;
+        let pos2 = pos4 - e.changedTouches[0].clientY;
+        pos3 = e.touches[0].clientX;
+        pos4 = e.touches[0].clientY;
 
-//         draggableDiagonostics.style.left = `${draggableDiagonostics.offsetLeft - pos1}px`;
-//         draggableDiagonostics.style.top = `${draggableDiagonostics.offsetTop - pos2}px`;
-//     }
+        draggableDiagonostics.style.left = `${draggableDiagonostics.offsetLeft - pos1}px`;
+        draggableDiagonostics.style.top = `${draggableDiagonostics.offsetTop - pos2}px`;
+    }
 
-//     function closeDragElement() {
-//         document.ontouchend = null;
-//         document.ontouchmove = null;
-//     }
-// });
+    function closeDragElement() {
+        document.ontouchend = null;
+        document.ontouchmove = null;
+    }
+});
 
 draggableDiagonostics.addEventListener("mousedown", (event) => {
     event.preventDefault();
@@ -200,7 +205,8 @@ draggableDiagonostics.addEventListener("mousedown", (event) => {
 
 const addWall = (x, y, event) => {
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     }
     if (event.target.classList == "cell start") {
@@ -235,7 +241,8 @@ const addWall = (x, y, event) => {
 
 const addStart = (x, y, event) => {
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     }
     if (event.target.classList != "cell start") {
@@ -279,7 +286,8 @@ const addStart = (x, y, event) => {
 
 const addEnd = (x, y, event) => {
     if (visualInProgress) {
-        alert("visualization in progress");
+        // alert("visualization in progress");
+        outputErrorVisualization();
         return;
     }
     if (event.target.classList != "cell end") {
