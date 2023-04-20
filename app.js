@@ -87,8 +87,8 @@ const updateStatus = () => {
         ")\nend (x, y): (" + end.x + ", " + end.y + ")" + 
         "\nalgorithm: " + currentAlgorithm + 
         "\nsetting: " + currentSetting + 
-        "\nbfs: " + bfsCompleted + 
-        "\ndfs: " + dfsCompleted + 
+        // "\nbfs: " + bfsCompleted + 
+        // "\ndfs: " + dfsCompleted + 
         "\nvisualInProgress: " + visualInProgress;
 }
 

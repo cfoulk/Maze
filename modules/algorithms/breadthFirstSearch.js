@@ -8,7 +8,6 @@ import { outputUndefinedError } from '../error/undefinedError.js';
 export const bfs = (completed, grid) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
-        // alert("undefined start/end point");
         outputUndefinedError();
         resetCompleted();
         return;

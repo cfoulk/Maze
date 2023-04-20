@@ -96,15 +96,17 @@ endButton.addEventListener("click", (event) => {
 randomzieButton.addEventListener("click", (event) => {
     document.getElementById("createmaze-button").classList.remove("show");
     currentAlgorithm = null;
-    resetCompleted();
-    event.target.classList.add("selected");
-    createRandom();
+    if(createRandom()) {
+        resetCompleted();
+        event.target.classList.add("selected");
+    }
 });
 
 resetMapButton.addEventListener("click", () => {
     currentAlgorithm = null;
-    resetCompleted();
-    resetMap();
+    if(resetMap()) {
+        resetCompleted();
+    }
 });
 
 bfsButton.addEventListener("click", () => {
@@ -114,7 +116,6 @@ bfsButton.addEventListener("click", () => {
 
     document.getElementById("algorithms-button").classList.remove("show");
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
         return;
     } else {
@@ -132,7 +133,6 @@ dfsButton.addEventListener("click", () => {
 
     document.getElementById("algorithms-button").classList.remove("show");
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
         return;
     } else {
@@ -205,7 +205,6 @@ draggableDiagonostics.addEventListener("mousedown", (event) => {
 
 const addWall = (x, y, event) => {
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
         return;
     }
@@ -241,7 +240,6 @@ const addWall = (x, y, event) => {
 
 const addStart = (x, y, event) => {
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
         return;
     }
@@ -286,7 +284,6 @@ const addStart = (x, y, event) => {
 
 const addEnd = (x, y, event) => {
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
         return;
     }

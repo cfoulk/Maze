@@ -8,14 +8,12 @@ import { outputUndefinedError } from '../error/undefinedError.js';
 export const dfs = (completed, grid) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
-        // alert("undefined start/end point");
         outputUndefinedError();
         resetCompleted(); // this could be better, just need to think
         return;
     }
     let stack = [];
     stack.push({ row: start.y, col: start.x });
-    // visitedNodes.push({ row: start.y, col: start.x });
     while (stack.length > 0) {
         let v = stack.pop();
         let edges = [

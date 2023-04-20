@@ -4,9 +4,8 @@ import { outputErrorVisualization } from "../error/visualizationError.js";
 
 export const resetMap = () => {
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
-        return;
+        return false;
     }
     // visitedNodes = [];
     while(visitedNodes.length > 0) {
@@ -32,11 +31,11 @@ export const resetMap = () => {
             }
         }
     }
+    return true;
 }
 
 export const resetVisited = () => {
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
         return;
     }

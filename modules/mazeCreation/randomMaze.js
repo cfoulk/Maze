@@ -5,9 +5,8 @@ import { outputErrorVisualization } from "../error/visualizationError.js";
 
 export const createRandom = () => {
     if (visualInProgress) {
-        // alert("visualization in progress");
         outputErrorVisualization();
-        return;
+        return false;
     }
     resetMap();
     for (let i = 0; i < ROWS; i++) {
@@ -21,5 +20,6 @@ export const createRandom = () => {
             }
         }
     }
+    return true;
 }
 
