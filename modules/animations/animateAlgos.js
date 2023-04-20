@@ -1,5 +1,6 @@
-import { updateStatus, start, end } from '../../app.js'
-// import { start, end  } from "../controller.js";
+import { start, end } from '../../app.js'
+import { updateStatus } from "../diagnostics.js";
+
 export let visualInProgress = false;
 
 export const animateVisitedNodes = (visitedNodes, path) => {

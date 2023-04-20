@@ -1,10 +1,11 @@
-import { grid, updateStatus, start, end } from '../app.js'
+import { grid, start, end } from '../app.js'
 import { bfs } from './algorithms/breadthFirstSearch.js'
 import { dfs } from './algorithms/depthFirstSearch.js'
 import { visualInProgress } from "./animations/animateAlgos.js";
 import { createRandom } from "./mazeCreation/randomMaze.js";
 import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
 import { outputErrorVisualization } from "./error/visualizationError.js";
+import { updateStatus } from "./diagnostics.js";
 
 export let currentSetting = "WALL";
 export let currentAlgorithm = null;

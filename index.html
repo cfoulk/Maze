@@ -10,15 +10,15 @@
     <link rel="stylesheet" type="text/css" href="./styles/canvas.css">
     <link rel="stylesheet" type="text/css" href="./styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="./styles/warning-box.css">
-    <link rel="icon" type="iamge/x-icon" href="favicon/favicon.ico" />
+    <link rel="icon" type="iamge/x-icon" href="./public/favicon.ico" />
 </head>
 
 <body>
     <div id="navbar">
         <ul>
-            <li>
+            <li id="logo-wrapper">
                 <div class="navbar-button">
-                    <a href="." id="logo" title="Home">Maze</a>
+                    <a href="." title="Home"><img src="./public/layer1.png" alt="Maze" id="logo"></a>
                 </div>
             </li>
             <li>
@@ -40,19 +40,9 @@
                     </div>
                 </div>
             </li>
-            <!-- <li><div class="navbar-button">Visualize</div></li> -->
-            <!-- <li><div class="navbar-button" id="randomize-button">Randomize</div></li> -->
             <li>
                 <div class="navbar-button" id="reset-button">Reset Map</div>
             </li>
-            <!-- <li> -->
-            <!--     <div class="navbar-button">Add ...</div> -->
-            <!--     <div class="dropdown-content"> -->
-            <!--         <div class="walls-button selected">Walls</div> -->
-            <!--         <div class="start-button">Start</div> -->
-            <!--         <div class="end-button">End</div> -->
-            <!--     </div> -->
-            <!-- </li> -->
             <li>
                 <div class="navbar-button selected" id="walls-button">
                     Add Walls
@@ -107,6 +97,7 @@
     <script type="module" src="./app.js"></script>
     <script type="module" src="./modules/node.js"></script>
     <script type="module" src="./modules/controller.js"></script>
+    <script type="module" src="./modules/diagnostics.js"></script>
     <script type="module" src="./modules/animations/animateAlgos.js"></script>
     <script type="module" src="./modules/mazeCreation/randomMaze.js"></script>
     <script type="module" src="./modules/mazeCreation/resetMap.js"></script>

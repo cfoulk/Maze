@@ -1,18 +1,12 @@
 
 .cell {
     background-color: white;
-    /* need responsive borders */
-    /* border: 0.5px solid lightblue; */ 
     border: .1vw solid lightblue; 
     position: absolute;
-    /* width: 2%; */
-    /* height: 3.334%; */
 }
 @keyframes visitedAnimation {
-  /* 0%  {background-color: greenyellow;} */
   0% {background-color: darkcyan;
   border: .1vw solid #324b40; }
-  /* 10%  {background-color: lightcyan;} */
   50%  {background-color: lightgreen;
   border: .1vw solid #324b40;}
   100%   {background-color: cyan;
@@ -27,41 +21,30 @@
 
 .visited {
     background-color: cyan;
-    /* border: 0.5px solid darkcyan; */
+    opacity: 0.7;
     animation-name: visitedAnimation;
     animation-duration: 500ms;
-    opacity: 0.7;
 }
 
 .start {
     background-color: green;
-    /* border: 0.5px solid green; */
-    /* border: .1vw solid green; */ 
     opacity: 0.7;
 }
 
 .end {
     background-color: red;
-    /* border: 0.5px solid red; */
-    /* border: .1vw solid red; */ 
     opacity: 0.7;
-}
-
-.found {
-    background-color: magenta;
-    border: 0.5px solid magenta;
 }
 
 .path {
     background-color: gold;
     border: .1vw solid darkgoldenrod; 
-    /* border: 0.5px solid gold; */
+    opacity: 0.7;
     animation-name: pathAnimation;
     animation-duration: 500ms;
-    opacity: 0.7;
 }
 
 .wall {
     background-color: darkblue;
-    /* border: 0.5px solid darkblue; */
+    opacity: 0.7;
 }

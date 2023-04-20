@@ -1,18 +1,18 @@
 import Node from "./modules/node.js"
-import { addStuff, bfsCompleted, dfsCompleted, currentSetting, currentAlgorithm} from "./modules/controller.js"
-import { visualInProgress } from "./modules/animations/animateAlgos.js";
+import { addStuff } from "./modules/controller.js"
+import { updateStatus } from "./modules/diagnostics.js";
 
-const COLS = 50; // 50
-const ROWS = 30; // 30
+const COLS = 50; 
+const ROWS = 30;
 
 let width = (1/COLS) * 100;
 let height = (1/ROWS) * 100;
 let start = {
-    x: Math.floor(COLS * 0.2), //10,15
+    x: Math.floor(COLS * 0.2), 
     y: ROWS * 0.5
 }
 let end = {
-    x: Math.floor(COLS * 0.8), //40, 15
+    x: Math.floor(COLS * 0.8), 
     y: ROWS * 0.5
 }
 
@@ -73,25 +73,6 @@ const createCanvas = () => {
         });
     }
 }
-
-// messy solution
-// could add: 
-// number of visited nodes
-// if end was found
-// total weight of path
-//
-const updateStatus = () => {
-    document.getElementById("status").innerHTML = 
-        "Toggle Diagnostics" +
-        "\nstart (x, y): (" + start.x + ", " + start.y + 
-        ")\nend (x, y): (" + end.x + ", " + end.y + ")" + 
-        "\nalgorithm: " + currentAlgorithm + 
-        "\nsetting: " + currentSetting + 
-        // "\nbfs: " + bfsCompleted + 
-        // "\ndfs: " + dfsCompleted + 
-        "\nvisualInProgress: " + visualInProgress;
-}
-
 
 createCanvas();
 updateStatus();
