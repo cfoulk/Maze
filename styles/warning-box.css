@@ -1,0 +1,23 @@
+
+#warning-box {
+    display:none;
+    height:100%;
+    width: 100%;
+    color: red;
+    font-size: 16px;
+    font-weight: 700;
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+#warning-box.show {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
