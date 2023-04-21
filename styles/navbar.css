@@ -9,21 +9,20 @@
 
 #logo {
     height: 37px;
-    /* padding-top: 0; */
 }
 
 ul {
     list-style-type: none;
     padding-left: 0;
     padding-right: 10px;
+    padding-bottom: 0;
     display: flex;
     flex-direction: flex-start;
     flex-wrap: wrap;
     justify-content: start;
-    align-items: end;
+    align-items: center;
     column-gap: .7rem;
     margin-top: 0;
-    /* padding-bottom: 3px; */
 } 
 
 li {
@@ -62,7 +61,7 @@ li:hover {
     margin: auto;
 }
 
-#diagz {
+#diagnostics-wrapper {
     margin-left: auto;
 }
 

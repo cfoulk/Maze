@@ -1,16 +1,31 @@
 
 .cell {
     background-color: white;
-    border: .1vw solid lightblue; 
+    /* background-color: #fff7d0; */
+    /* border: .1vw solid lightblue; */ 
+    /* border: .1vw solid lightgray; */ 
+    border: .1vw solid lightgrey; 
     position: absolute;
 }
 @keyframes visitedAnimation {
-  0% {background-color: darkcyan;
-  border: .1vw solid #324b40; }
-  50%  {background-color: lightgreen;
-  border: .1vw solid #324b40;}
-  100%   {background-color: cyan;
-  border: .1vw solid #324b40;}
+  /* 0%   {background-color: #0000FF; */
+  /* border: .1vw solid #324b40; } */
+  /* 50%  {background-color: #0080FF; */
+  /* border: .1vw solid #324b40;} */
+  /* 100% {background-color: #00FFFF; */
+  /* border: .1vw solid #324b40;} */
+
+  0%   {background-color: #845ec2;
+  border: .1vw solid #845ec2;}
+  30%   {background-color: #a178df;
+  border: .1vw solid #845ec2; }
+  70%   {background-color: #be93fd;
+  border: .1vw solid #845ec2; }
+  100%   {background-color: #dcb0ff;
+  border: .1vw solid #845ec2; }
+  /* 100%   {background-color: #faccff; */
+  /* border: .1vw solid #845ec2; } */
+
 }
 
 @keyframes pathAnimation {
@@ -20,10 +35,17 @@
 }
 
 .visited {
-    background-color: cyan;
-    opacity: 0.7;
+    /* background-color: cyan; */
+    /* opacity: 0.7; */
     animation-name: visitedAnimation;
+    animation-fill-mode: forwards;
     animation-duration: 500ms;
+}
+
+.wall {
+    /* background-color: darkblue; */
+    background-color: black;
+    opacity: 0.7;
 }
 
 .start {
@@ -37,14 +59,11 @@
 }
 
 .path {
-    background-color: gold;
+    /* background-color: gold; */
     border: .1vw solid darkgoldenrod; 
     opacity: 0.7;
     animation-name: pathAnimation;
+    animation-fill-mode: forwards;
     animation-duration: 500ms;
 }
 
-.wall {
-    background-color: darkblue;
-    opacity: 0.7;
-}
