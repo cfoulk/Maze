@@ -1,4 +1,4 @@
-import { visitedNodes, ROWS, COLS, start, end }  from '../../app.js'
+import { visitedNodes, ROWS, COLS, start, end } from '../../app.js'
 import { animateVisitedNodes, recreateVisual } from '../animations/animateAlgos.js'
 import { resetCompleted } from '../controller.js';
 import { createPath } from "./path.js";

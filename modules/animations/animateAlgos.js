@@ -27,12 +27,7 @@ export const animateVisitedNodes = (visitedNodes, path) => {
 export const animatePath = (path) => {
     if (path.length > 0) {
         const pathInOrder = path.reverse();
-        for (let i = 0; i <= pathInOrder.length; i++) {
-            if (i == pathInOrder.length) {
-                visualInProgress = false;
-                updateStatus();
-                return;
-            }
+        for (let i = 0; i <= pathInOrder.length - 1; i++) {
             setTimeout(() => {
                 const { row, col } = pathInOrder[i];
                 let id = "node " + col + " " + row;
@@ -45,17 +40,20 @@ export const animatePath = (path) => {
         updateStatus();
         return;
     }
+    setTimeout(() => {
+        visualInProgress = false;
+        updateStatus();
+        return;
+    }, 25 * path.length);
 }
 
 export const recreateVisual = (visitedNodes, path) => {
-    // console.log("visited: " + visitedNodes.length + "\npath: " + path.length);
     for (let i = 0; i < visitedNodes.length; i++) {
         const { row, col } = visitedNodes[i];
         if (row == start.y && col == start.x || row == end.y && col == end.x) {
             continue;
         } else {
             let id = "node " + col + " " + row;
-            // console.log(id);
             document.getElementById(id).classList.add("visited");
         }
     }

@@ -1,9 +1,9 @@
 #navbar {
+    grid-row: 1;
     position: relative;
     height: 100%;
     width: 100%;
     display: inline-grid;
-    grid-row-start: 1;
     background-color: lightgreen;
 }
 

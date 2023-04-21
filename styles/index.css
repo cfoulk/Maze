@@ -6,7 +6,7 @@ body {
     text-align: center;
     overflow-x: hidden;
     display: grid;
-    grid-template-rows: 5% 5% 85% 5%;
+    grid-template-rows: 5% 5% 2.5% 85% 2.5%;
 }
 
 #status {
@@ -27,7 +27,7 @@ body {
 }
 
 #footer {
-    grid-row-start: 4;
+    grid-row: 5;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -35,9 +35,18 @@ body {
 
 @media (max-width: 700px) {
     body {
-        grid-template-rows: 7.5% 2% 83% 7.5%;
+        grid-template-rows: 7.5% 2% 5% 83% 2.5%;
     }
     #footer {
         font-size: 12px;
     }
+}
+
+@media (max-height: 630px) {
+    body {
+        grid-template-rows: 7.5% 3% 7% 80% 2.5%;
+    }
+    /* #footer { */
+    /*     font-size: 12px; */
+    /* } */
 }

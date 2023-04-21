@@ -44,6 +44,7 @@ export const resetCompleted = () => {
     bfsButton.classList.remove("selected");
     dfsButton.classList.remove("selected");
     randomzieButton.classList.remove("selected");
+    currentAlgorithm = null;
     updateStatus();
 }
 

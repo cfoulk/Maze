@@ -1,4 +1,5 @@
 #warning-box {
+    grid-row: 2;
     display:none;
     height:100%;
     width: 100%;
