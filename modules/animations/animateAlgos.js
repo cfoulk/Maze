@@ -1,5 +1,6 @@
 import { start, end } from '../../app.js'
 import { updateStatus } from "../diagnostics.js";
+import { outputPathNotFound } from '../error/pathNotFound.js';
 
 export let visualInProgress = false;
 
@@ -43,7 +44,7 @@ export const animatePath = (path) => {
             }, 25 * i);
         }
     } else {
-        console.log("no path!");
+        outputPathNotFound();
         visualInProgress = false;
         updateStatus();
         return;

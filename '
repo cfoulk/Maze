@@ -9,9 +9,9 @@ export const animateMazeCreation = (nodes) => {
             let { row, col } = nodes[i];
             let id = "node " + col + " " + row;
             document.getElementById(id).classList.remove("wall");
+            document.getElementById(id).classList.remove("head");
             document.getElementById(id).classList.add("head");
             let prev = id;
-            head(prev);
         }, 15 * i);
     }
     setTimeout(() => {
@@ -19,10 +19,4 @@ export const animateMazeCreation = (nodes) => {
         updateStatus();
         return;
     }, 15 * nodes.length);
-}
-
-function head(prev) {
-    setTimeout(() => {
-        document.getElementById(prev).classList.remove("head");
-    }, 50 );
 }
