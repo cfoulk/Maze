@@ -1,6 +1,7 @@
 import { ROWS, COLS, grid, visitedNodes } from "../../app.js";
 import { visualInProgress } from "../animations/animateAlgos.js";
 import { outputErrorVisualization } from "../error/visualizationError.js";
+import { clearedNodes } from "./recursiveBacktrack.js";
 
 export const resetMap = () => {
     if (visualInProgress) {
@@ -11,12 +12,17 @@ export const resetMap = () => {
     while(visitedNodes.length > 0) {
         visitedNodes.pop();
     }
+    while(clearedNodes.length > 0) {
+        clearedNodes.pop();
+    }
     // console.log(visitedNodes);
     for (let i = 0; i < ROWS; i++) {
         for (let j = 0; j < COLS; j++) {
             if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
                 grid[i][j].setWall(false);
                 grid[i][j].setVisited(false);
+                grid[i][j].setMazeVisited(false);
+                grid[i][j].mazeSides = 4;
                 grid[i][j].setParent(null);
                 let id = "node " + j + " " + i;
                 document.getElementById(id).classList.remove("wall");
@@ -24,6 +30,9 @@ export const resetMap = () => {
                 document.getElementById(id).classList.remove("path");
             } else {
                 let id = "node " + j + " " + i;
+                // this needs more thought
+                grid[i][j].setMazeVisited(false);
+                grid[i][j].mazeSides = 4;
                 grid[i][j].setVisited(false);
                 grid[i][j].setParent(null);
                 document.getElementById(id).classList.remove("visited");

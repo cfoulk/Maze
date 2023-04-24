@@ -23,3 +23,14 @@ export const createRandom = () => {
     return true;
 }
 
+export function blankWalls() {
+    for (let i = 0; i < ROWS; i++) {
+        for (let j = 0; j < COLS; j++) {
+            if (grid[i][j].isStart == false && grid[i][j].isEnd == false) {
+                grid[i][j].setWall(true);
+                let id = "node " + j + " " + i;
+                document.getElementById(id).classList.add("wall");
+            }
+        }
+    }
+}

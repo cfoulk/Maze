@@ -3,6 +3,14 @@ import { updateStatus } from "../diagnostics.js";
 
 export let visualInProgress = false;
 
+export function setVisualProgress() {
+    if(visualInProgress) {
+        visualInProgress = false;
+    } else {
+        visualInProgress = true;
+    }
+}
+
 export const animateVisitedNodes = (visitedNodes, path) => {
     visualInProgress = true;
     for (let i = 0; i <= visitedNodes.length; i++) {

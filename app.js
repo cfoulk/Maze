@@ -77,4 +77,4 @@ const createCanvas = () => {
 createCanvas();
 updateStatus();
 
-export { grid, visitedNodes, start, end, ROWS, COLS, updateStatus }; 
+export { grid, visitedNodes, start, end, ROWS, COLS }; 

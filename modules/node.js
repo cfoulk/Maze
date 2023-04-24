@@ -6,6 +6,8 @@ export default class Node {
         this.isEnd = isEnd;
         this.isWall = isWall;
         this.visited = false;
+        this.mazeVisited = false;
+        this.mazeSides = 4;
         this.parent = null;
         this.weight = 1;
         // this.gScore = Infinity;
@@ -26,6 +28,14 @@ export default class Node {
 
     setVisited(b) {
         this.visited = b;
+    }
+
+    setMazeVisited(b) {
+        this.mazeVisited = b;
+    }
+
+    setMazeSides() {
+        this.mazeSides--;
     }
 
     setParent(b) {

@@ -35,6 +35,7 @@
     * Move start/end points
 * Maze creation presets
     * Randomized maze
+    * Recursive Backtrack
 * Mobile support across browers and platforms
 * Responsive layout
 * Draggable diagnostic panel

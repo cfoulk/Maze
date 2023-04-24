@@ -9,7 +9,7 @@ export const dfs = (completed, grid) => {
     resetVisited();
     if (start.x == undefined || end.x == undefined) {
         outputUndefinedError();
-        resetCompleted(); // this could be better, just need to think
+        resetCompleted(); 
         return;
     }
     let stack = [];

@@ -6,6 +6,7 @@ import { createRandom } from "./mazeCreation/randomMaze.js";
 import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
 import { outputErrorVisualization } from "./error/visualizationError.js";
 import { updateStatus } from "./diagnostics.js";
+import { createBacktrackMaze } from './mazeCreation/recursiveBacktrack.js';
 
 export let currentSetting = "WALL";
 export let currentAlgorithm = null;
@@ -14,17 +15,18 @@ export let dfsCompleted = false;
 export const wallsButton = document.querySelector("#walls-button");
 export const startButton = document.querySelector("#start-button");
 export const endButton = document.querySelector("#end-button");
-export const randomzieButton = document.querySelector("#randomize-button");
 export const resetMapButton = document.querySelector("#reset-button");
 export const bfsButton = document.querySelector("#bfs-button");
 export const dfsButton = document.querySelector("#dfs-button");
-// work on namees
 export const draggableDiagonostics = document.querySelector("#status");
 export const diagnosticsBtn = document.querySelector("#diagnosticsButton");
 
 export const navbarButton = document.querySelectorAll(".navbar-button");
 export const dropdownContent = document.querySelectorAll(".dropdown-content");
 let inDropdown = false;
+
+export const randomizeButton = document.querySelector("#randomize-button");
+export const recursiveBacktrack = document.querySelector("#recursive-backtrack");
 
 export const addStuff = (event) => {
     if (currentSetting == "WALL") {
@@ -43,7 +45,8 @@ export const resetCompleted = () => {
     dfsCompleted = false;
     bfsButton.classList.remove("selected");
     dfsButton.classList.remove("selected");
-    randomzieButton.classList.remove("selected");
+    randomizeButton.classList.remove("selected");
+    recursiveBacktrack.classList.remove("selected");
     currentAlgorithm = null;
     updateStatus();
 }
@@ -95,10 +98,19 @@ endButton.addEventListener("click", (event) => {
     updateStatus();
 });
 
-randomzieButton.addEventListener("click", (event) => {
+randomizeButton.addEventListener("click", (event) => {
     document.getElementById("createmaze-button").classList.remove("show");
     currentAlgorithm = null;
-    if(createRandom()) {
+    if (createRandom()) {
+        resetCompleted();
+        event.target.classList.add("selected");
+    }
+});
+
+recursiveBacktrack.addEventListener("click", (event) => {
+    document.getElementById("createmaze-button").classList.remove("show");
+    currentAlgorithm = null;
+    if (createBacktrackMaze()) {
         resetCompleted();
         event.target.classList.add("selected");
     }
@@ -106,7 +118,7 @@ randomzieButton.addEventListener("click", (event) => {
 
 resetMapButton.addEventListener("click", () => {
     currentAlgorithm = null;
-    if(resetMap()) {
+    if (resetMap()) {
         resetCompleted();
     }
 });
@@ -254,7 +266,6 @@ const addStart = (x, y, event) => {
             end.y = undefined;
         }
         if (start.x != undefined && start.y != undefined) {
-            // console.log("old start X: " + start.x + " Y: " + start.y);
             let id = "node " + start.x + " " + start.y;
             document.getElementById(id).classList.remove("start");
             grid[start.y][start.x].setStart(false);
@@ -265,8 +276,6 @@ const addStart = (x, y, event) => {
         grid[y][x].setWall(false);
         start.x = x;
         start.y = y;
-        // grid[y][x].toString();
-        // console.log("new start X: " + start.x + " Y: " + start.y);
         if (bfsCompleted) {
             bfs(true, grid);
         }
@@ -297,7 +306,6 @@ const addEnd = (x, y, event) => {
             start.y = undefined;
         }
         if (end.x != undefined && end.y != undefined) {
-            // console.log("old end X: " + end.x + " Y: " + end.y);
             let id = "node " + end.x + " " + end.y;
             document.getElementById(id).classList.remove("end");
             grid[end.y][end.x].setEnd(false);
@@ -308,7 +316,6 @@ const addEnd = (x, y, event) => {
         grid[y][x].setWall(false);
         end.x = x;
         end.y = y;
-        // console.log("new end X: " + end.x + " Y: " + end.y);
         if (bfsCompleted) {
             bfs(true, grid);
         }
