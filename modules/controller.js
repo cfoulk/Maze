@@ -7,11 +7,13 @@ import { resetMap, resetVisited } from "./mazeCreation/resetMap.js";
 import { outputErrorVisualization } from "./error/visualizationError.js";
 import { updateStatus } from "./diagnostics.js";
 import { createBacktrackMaze } from './mazeCreation/recursiveBacktrack.js';
+import { dijkstrastrasAlg } from './algorithms/dijkstras.js';
 
 export let currentSetting = "WALL";
 export let currentAlgorithm = null;
 export let bfsCompleted = false;
 export let dfsCompleted = false;
+export let dijkstraCompleted = false;
 export const wallsButton = document.querySelector("#walls-button");
 export const weightsButton = document.querySelector("#weights-button");
 export const startButton = document.querySelector("#start-button");
@@ -19,6 +21,7 @@ export const endButton = document.querySelector("#end-button");
 export const resetMapButton = document.querySelector("#reset-button");
 export const bfsButton = document.querySelector("#bfs-button");
 export const dfsButton = document.querySelector("#dfs-button");
+export const dijkstrasButton = document.querySelector("#dijkstras-button");
 export const draggableDiagonostics = document.querySelector("#status");
 export const diagnosticsBtn = document.querySelector("#diagnosticsButton");
 
@@ -47,8 +50,10 @@ export const addStuff = (event) => {
 export const resetCompleted = () => {
     bfsCompleted = false;
     dfsCompleted = false;
+    dijkstraCompleted = false;
     bfsButton.classList.remove("selected");
     dfsButton.classList.remove("selected");
+    dijkstrasButton.classList.remove("selected");
     randomizeButton.classList.remove("selected");
     recursiveBacktrack.classList.remove("selected");
     currentAlgorithm = null;
@@ -141,6 +146,7 @@ resetMapButton.addEventListener("click", () => {
 
 bfsButton.addEventListener("click", () => {
     dfsButton.classList.remove("selected");
+    dijkstrasButton.classList.remove("selected");
     bfsButton.classList.add("selected");
     currentAlgorithm = "BFS"
 
@@ -151,6 +157,7 @@ bfsButton.addEventListener("click", () => {
     } else {
         bfsCompleted = true;
         dfsCompleted = false;
+        dijkstraCompleted = false;
         bfs(false, grid);
         updateStatus();
     }
@@ -158,6 +165,7 @@ bfsButton.addEventListener("click", () => {
 
 dfsButton.addEventListener("click", () => {
     bfsButton.classList.remove("selected");
+    dijkstrasButton.classList.remove("selected");
     dfsButton.classList.add("selected");
     currentAlgorithm = "DFS"
 
@@ -168,7 +176,28 @@ dfsButton.addEventListener("click", () => {
     } else {
         dfsCompleted = true;
         bfsCompleted = false;
+        dijkstraCompleted = false;
         dfs(false, grid);
+        updateStatus();
+    }
+});
+
+dijkstrasButton.addEventListener("click", () => {
+    dfsButton.classList.remove("selected");
+    bfsButton.classList.remove("selected");
+    dijkstrasButton.classList.add("selected");
+    currentAlgorithm = "Dijkstra"
+
+    document.getElementById("algorithms-button").classList.remove("show");
+    if (visualInProgress) {
+        outputErrorVisualization();
+        return;
+    } else {
+        dijkstraCompleted = true;
+        bfsCompleted = false;
+        dfsCompleted = false;
+        // bfs(false, grid);
+        dijkstrastrasAlg(false, grid);
         updateStatus();
     }
 });
@@ -266,6 +295,9 @@ const addWall = (x, y, event) => {
     if (dfsCompleted) {
         dfs(true, grid);
     }
+    if (dijkstraCompleted) {
+        dijkstrastrasAlg(true, grid);
+    }
 }
 
 // not finished
@@ -307,6 +339,9 @@ const addWeight = (x, y, event) => {
     if (dfsCompleted) {
         dfs(true, grid);
     }
+    if (dijkstraCompleted) {
+        dijkstrastrasAlg(true, grid);
+    }
 }
 
 const addStart = (x, y, event) => {
@@ -338,6 +373,9 @@ const addStart = (x, y, event) => {
         }
         if (dfsCompleted) {
             dfs(true, grid);
+        }
+        if (dijkstraCompleted) {
+            dijkstrastrasAlg(true, grid);
         }
     } else { //remove the set wall
         event.target.classList.remove("start");
@@ -378,6 +416,9 @@ const addEnd = (x, y, event) => {
         }
         if (dfsCompleted) {
             dfs(true, grid);
+        }
+        if (dijkstraCompleted) {
+            dijkstrastrasAlg(true, grid);
         }
     } else {
         event.target.classList.remove("end");

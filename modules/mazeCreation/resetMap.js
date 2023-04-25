@@ -9,10 +9,10 @@ export const resetMap = () => {
         return false;
     }
     // visitedNodes = [];
-    while(visitedNodes.length > 0) {
+    while (visitedNodes.length > 0) {
         visitedNodes.pop();
     }
-    while(clearedNodes.length > 0) {
+    while (clearedNodes.length > 0) {
         clearedNodes.pop();
     }
     // console.log(visitedNodes);
@@ -41,7 +41,9 @@ export const resetMap = () => {
                 grid[i][j].setParent(null);
                 grid[i][j].distance = Infinity;
                 document.getElementById(id).classList.remove("visited");
+                document.getElementById(id).classList.remove("weight");
                 document.getElementById(id).classList.remove("found");
+                document.getElementById(id).innerHTML = "";
             }
         }
     }
@@ -54,7 +56,7 @@ export const resetVisited = () => {
         return;
     }
     // visitedNodes = [];
-    while(visitedNodes.length > 0) {
+    while (visitedNodes.length > 0) {
         visitedNodes.pop();
     }
     // console.log(visitedNodes);
@@ -62,10 +64,13 @@ export const resetVisited = () => {
         for (let j = 0; j < COLS; j++) {
             grid[i][j].setVisited(false);
             grid[i][j].setParent(null);
+            grid[i][j].distance = Infinity;
             let id = "node " + j + " " + i;
             document.getElementById(id).classList.remove("path");
             document.getElementById(id).classList.remove("visited");
             document.getElementById(id).classList.remove("found");
+            document.getElementById(id).classList.remove("weight");
+            document.getElementById(id).innerHTML = "";
         }
     }
 }
