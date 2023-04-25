@@ -10,7 +10,7 @@ export const createPath = (grid, end) => {
         }
         return path;
     } catch (error) {
-        console.log("walled in!");
+        console.log(error);
         return [];
     }
 }

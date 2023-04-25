@@ -31,10 +31,19 @@
 .legend-cell {
     height: 20px;
     width: 20px;
+    font-size: 0.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .legend-cell#wall {
     background-color: black;
+    opacity: 0.7;
+}
+
+.legend-cell#weight {
+    background-color: lightgrey;
     opacity: 0.7;
 }
 
@@ -99,14 +108,19 @@
         grid-row: 1;
     }
 
-    #visited-wrapper {
+    #wall-wrapper {
         grid-column: 2;
         grid-row: 2;
     }
 
-    #path-wrapper {
+    #visited-wrapper {
         grid-column: 3;
         grid-row: 1;
+    }
+
+    #path-wrapper {
+        grid-column: 3;
+        grid-row: 2;
     }
 }
 

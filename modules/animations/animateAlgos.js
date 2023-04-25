@@ -39,7 +39,7 @@ export const animateWeightedVisitedNodes = (grid, visitedNodes, path) => {
         if (i == visitedNodes.length) {
             setTimeout(() => {
                 animateWeightedPath(grid, path);
-            }, 10 * i);
+            }, 5 * i);
             return;
         }
         setTimeout(() => {
@@ -51,7 +51,7 @@ export const animateWeightedVisitedNodes = (grid, visitedNodes, path) => {
                 document.getElementById(id).classList.add("visited");
                 document.getElementById(id).innerHTML = grid[row][col].distance;
             }
-        }, 10 * i);
+        }, 5 * i);
     }
 }
 
