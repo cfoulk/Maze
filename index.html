@@ -11,6 +11,15 @@
     <link rel="stylesheet" type="text/css" href="./styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="./styles/warning-box.css">
     <link rel="icon" type="iamge/x-icon" href="./public/favicon.ico" />
+
+    <script type="module" src="./app.js" defer></script>
+    <!-- <script type="module" src="./modules/node.js"></script> -->
+    <!-- <script type="module" src="./modules/controller.js"></script> -->
+    <!-- <script type="module" src="./modules/diagnostics.js"></script> -->
+    <!-- <script type="module" src="./modules/animations/animateAlgos.js"></script> -->
+    <!-- <script type="module" src="./modules/animations/animateMaze.js"></script> -->
+    <!-- <script type="module" src="./modules/mazeCreation/randomMaze.js"></script> -->
+    <!-- <script type="module" src="./modules/mazeCreation/resetMap.js"></script> -->
 </head>
 
 <body>
@@ -61,6 +70,12 @@
                     Set End
                 </div>
             </li>
+            <li>
+                <div class="navbar-button" id="weights-button">
+                    Add Weights
+                </div>
+                <input type="number" id="weights-input" value="2" />
+            </li>
             <li id="diagnostics-wrapper">
                 <div class="navbar-button" id="diagnosticsButton">Diagnostics</div>
             </li>
@@ -97,14 +112,6 @@
     <div id="footer">
         Created by Charles Foulk
     </div>
-    <script type="module" src="./app.js"></script>
-    <script type="module" src="./modules/node.js"></script>
-    <script type="module" src="./modules/controller.js"></script>
-    <script type="module" src="./modules/diagnostics.js"></script>
-    <script type="module" src="./modules/animations/animateAlgos.js"></script>
-    <script type="module" src="./modules/animations/animateMaze.js"></script>
-    <script type="module" src="./modules/mazeCreation/randomMaze.js"></script>
-    <script type="module" src="./modules/mazeCreation/resetMap.js"></script>
 </body>
 
 </html>

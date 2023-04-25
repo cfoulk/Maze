@@ -49,6 +49,14 @@ li:hover {
     background-color: lightblue;
 }
 
+#weights-input {
+    display: none;
+}
+
+.navbar-button.selected ~ #weights-input {
+    display: block;
+}
+
 .dropdown-content div {
   color: black;
   padding: 12px 16px;
@@ -99,5 +107,10 @@ li:hover {
 
     #logo {
         height: 18px;
+    }
+}
+@media (max-height: 630px) {
+    li {
+        font-size: 10px;
     }
 }

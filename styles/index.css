@@ -44,8 +44,10 @@ body {
 
 @media (max-height: 630px) {
     body {
-        grid-template-rows: 7.5% 3% 7% 80% 2.5%;
+        grid-template-rows: 7.5% 3% 10% 77% 2.5%;
+        font-size: 10px;
     }
+
     /* #footer { */
     /*     font-size: 12px; */
     /* } */

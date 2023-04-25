@@ -24,10 +24,14 @@ export const resetMap = () => {
                 grid[i][j].setMazeVisited(false);
                 grid[i][j].mazeSides = 4;
                 grid[i][j].setParent(null);
+                grid[i][j].weight = 1;
+                grid[i][j].distance = Infinity;
                 let id = "node " + j + " " + i;
                 document.getElementById(id).classList.remove("wall");
+                document.getElementById(id).classList.remove("weight");
                 document.getElementById(id).classList.remove("visited");
                 document.getElementById(id).classList.remove("path");
+                document.getElementById(id).innerHTML = "";
             } else {
                 let id = "node " + j + " " + i;
                 // this needs more thought
@@ -35,6 +39,7 @@ export const resetMap = () => {
                 grid[i][j].mazeSides = 4;
                 grid[i][j].setVisited(false);
                 grid[i][j].setParent(null);
+                grid[i][j].distance = Infinity;
                 document.getElementById(id).classList.remove("visited");
                 document.getElementById(id).classList.remove("found");
             }

@@ -10,7 +10,7 @@ export default class Node {
         this.mazeSides = 4;
         this.parent = null;
         this.weight = 1;
-        // this.gScore = Infinity;
+        this.distance = Infinity;
         // this.fScore = Infinity;
     }
 
@@ -36,6 +36,14 @@ export default class Node {
 
     setMazeSides() {
         this.mazeSides--;
+    }
+
+    setWeight(b) {
+        this.weight = b;
+    }
+
+    setDistance(b) {
+        this.distance = b;
     }
 
     setParent(b) {

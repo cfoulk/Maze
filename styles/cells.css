@@ -3,6 +3,11 @@
     background-color: white;
     border: .1vw solid lightgrey; 
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    font-size: .6vw;
 }
 @keyframes visitedAnimation {
   0%   {background-color: #845ec2;
@@ -29,6 +34,11 @@
 
 .wall {
     background-color: black;
+    opacity: 0.7;
+}
+
+.weight {
+    background-color: lightgrey;
     opacity: 0.7;
 }
 
