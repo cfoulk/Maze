@@ -265,6 +265,18 @@ draggableDiagonostics.addEventListener("mousedown", (event) => {
 
 });
 
+function liveRecreate() {
+    if (bfsCompleted) {
+        bfs(true, grid);
+    }
+    if (dfsCompleted) {
+        dfs(true, grid);
+    }
+    if (dijkstraCompleted) {
+        dijkstrastrasAlg(true, grid);
+    }
+}
+
 const addWall = (x, y, event) => {
     if (visualInProgress) {
         outputErrorVisualization();
@@ -282,28 +294,19 @@ const addWall = (x, y, event) => {
         end.y = undefined;
     } else if (event.target.classList == "cell weight") {
         event.target.classList.remove("weight");
+        event.target.innerHTML = "";
         grid[y][x].setWeight(1);
     }
     if (event.target.classList != "cell wall") {
         event.target.classList.add("wall");
         grid[y][x].setWall(true);
-        // grid[y][x].toString();
     } else {
         event.target.classList.remove("wall");
         grid[y][x].setWall(false);
-        // grid[y][x].toString();
     }
     // this is soooooooooooooooo ineffiecient but i dont know a better solution!
     updateStatus();
-    if (bfsCompleted) {
-        bfs(true, grid);
-    }
-    if (dfsCompleted) {
-        dfs(true, grid);
-    }
-    if (dijkstraCompleted) {
-        dijkstrastrasAlg(true, grid);
-    }
+    liveRecreate();
 }
 
 // not finished
@@ -323,6 +326,9 @@ const addWeight = (x, y, event) => {
         grid[y][x].setEnd(false);
         end.x = undefined;
         end.y = undefined;
+    } else if (event.target.classList == "cell wall") {
+        event.target.classList.remove("wall");
+        grid[y][x].setWall(false);
     }
     if (event.target.classList != "cell weight") {
         event.target.classList.add("weight");
@@ -335,15 +341,7 @@ const addWeight = (x, y, event) => {
     }
     // this is soooooooooooooooo ineffiecient but i dont know a better solution!
     updateStatus();
-    if (bfsCompleted) {
-        bfs(true, grid);
-    }
-    if (dfsCompleted) {
-        dfs(true, grid);
-    }
-    if (dijkstraCompleted) {
-        dijkstrastrasAlg(true, grid);
-    }
+    liveRecreate();
 }
 
 const addStart = (x, y, event) => {
@@ -365,20 +363,15 @@ const addStart = (x, y, event) => {
             grid[start.y][start.x].setStart(false);
         }
         event.target.classList.remove("wall");
+        event.target.classList.remove("weight");
+        event.target.innerHTML = "";
         event.target.classList.add("start");
         grid[y][x].setStart(true);
         grid[y][x].setWall(false);
+        grid[y][x].setWeight(1);
         start.x = x;
         start.y = y;
-        if (bfsCompleted) {
-            bfs(true, grid);
-        }
-        if (dfsCompleted) {
-            dfs(true, grid);
-        }
-        if (dijkstraCompleted) {
-            dijkstrastrasAlg(true, grid);
-        }
+        liveRecreate();
     } else { //remove the set wall
         event.target.classList.remove("start");
         grid[y][x].setStart(false);
@@ -408,20 +401,15 @@ const addEnd = (x, y, event) => {
             grid[end.y][end.x].setEnd(false);
         }
         event.target.classList.remove("wall");
+        event.target.classList.remove("weight");
+        event.target.innerHTML = "";
         event.target.classList.add("end");
         grid[y][x].setEnd(true);
         grid[y][x].setWall(false);
+        grid[y][x].setWeight(1);
         end.x = x;
         end.y = y;
-        if (bfsCompleted) {
-            bfs(true, grid);
-        }
-        if (dfsCompleted) {
-            dfs(true, grid);
-        }
-        if (dijkstraCompleted) {
-            dijkstrastrasAlg(true, grid);
-        }
+        liveRecreate();
     } else {
         event.target.classList.remove("end");
         grid[y][x].setEnd(false);
