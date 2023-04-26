@@ -17,6 +17,7 @@ export let dijkstraCompleted = false;
 
 export const wallsButton = document.querySelector("#walls-button");
 export const weightsButton = document.querySelector("#weights-button");
+export const weightsInput = document.querySelector("#weights-wrapper");
 export const startButton = document.querySelector("#start-button");
 export const endButton = document.querySelector("#end-button");
 export const resetMapButton = document.querySelector("#reset-button");
@@ -89,6 +90,7 @@ for (const drops of dropdownContent) {
 wallsButton.addEventListener("click", (event) => {
     currentSetting = "WALL";
     weightsButton.classList.remove("selected");
+    weightsInput.classList.remove("displayed")
     startButton.classList.remove("selected");
     endButton.classList.remove("selected");
     event.target.classList.add("selected");
@@ -101,6 +103,7 @@ weightsButton.addEventListener("click", (event) => {
     startButton.classList.remove("selected");
     endButton.classList.remove("selected");
     event.target.classList.add("selected");
+    weightsInput.classList.add("displayed")
     updateStatus();
 });
 
@@ -108,6 +111,7 @@ startButton.addEventListener("click", (event) => {
     currentSetting = "START";
     wallsButton.classList.remove("selected");
     weightsButton.classList.remove("selected");
+    weightsInput.classList.remove("displayed")
     endButton.classList.remove("selected");
     event.target.classList.add("selected");
     updateStatus();
@@ -117,6 +121,7 @@ endButton.addEventListener("click", (event) => {
     currentSetting = "END";
     wallsButton.classList.remove("selected");
     weightsButton.classList.remove("selected");
+    weightsInput.classList.remove("displayed")
     startButton.classList.remove("selected");
     event.target.classList.add("selected");
     updateStatus();
