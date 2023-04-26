@@ -53,7 +53,7 @@ export const dijkstrastrasAlg = (completed, grid) => {
                 grid[y][x].setDistance(grid[row][col].distance + grid[y][x].weight);
                 grid[y][x].setParent(grid[row][col]);
                 bufferSet.add({ dist: grid[y][x].distance, row: grid[y][x].row, col: grid[y][x].col });
-                visitedNodes.push({ row: parseInt(y), col: parseInt(x) });
+                visitedNodes.push({ dist: grid[y][x].distance,  row: parseInt(y), col: parseInt(x) });
             }
         }
 

@@ -26,16 +26,19 @@
 ## <a name="key-features">Key Features</a>
 
 * Visualization of pathfinding algorithms
-    * Breadth-First Search
-    * Depth-First Search
+    - Unweighted Algorithms:
+        * Breadth-First Search
+        * Depth-First Search
+    - Weighted Algorithms:
+        * Dijkstra's Algorithm
 * User control of start/end points
-* User can control the flow of algorithms with the use of walls(blocking paths) 
+* User can control the flow of algorithms with the use of walls(blocking paths) & weights
 * Live visual recreations with user input
-    * Changing walls with change the flow of visited cells
-    * Move start/end points
+    - Changing walls/weights will change the flow of visited cells
+    - Move start/end points
 * Maze creation presets
-    * Randomized maze
-    * Recursive Backtrack
+    - Randomized maze
+    - Recursive Backtrack
 * Mobile support across browers and platforms
 * Responsive layout
 * Draggable diagnostic panel

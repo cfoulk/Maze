@@ -43,16 +43,26 @@ export const animateWeightedVisitedNodes = (grid, visitedNodes, path) => {
             return;
         }
         setTimeout(() => {
-            const { row, col } = visitedNodes[i];
+            const { dist, row, col } = visitedNodes[i];
+            let id = "node " + col + " " + row;
             if (row == start.y && col == start.x || row == end.y && col == end.x) {
                 return;
+            } else if (document.getElementById(id).classList == "cell visited") {
+                animateVisitedCell(id);
+                document.getElementById(id).innerHTML = dist;
             } else {
-                let id = "node " + col + " " + row;
                 document.getElementById(id).classList.add("visited");
-                document.getElementById(id).innerHTML = grid[row][col].distance;
+                document.getElementById(id).innerHTML = dist;
             }
         }, 5 * i);
     }
+}
+
+function animateVisitedCell(id) {
+  var cell = document.getElementById(id);
+  cell.classList.remove("visited");
+  void cell.offsetWidth; // force a reflow to reset the animation
+  cell.classList.add("visited");
 }
 
 export const animatePath = (path) => {
@@ -140,4 +150,7 @@ export const recreateWeightedVisual = (grid, visitedNodes, path) => {
         let id = "node " + col + " " + row;
         document.getElementById(id).classList.add("path");
     }
+
+    let id = "node " + end.x + " " + end.y;
+    document.getElementById(id).innerHTML = grid[end.y][end.x].distance;
 }

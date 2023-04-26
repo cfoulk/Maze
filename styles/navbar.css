@@ -82,6 +82,12 @@ li:hover {
     z-index: 1;   
 }
 
+.dropdown-divider {
+    font-size: 10px;
+    border: black solid 2px;
+}
+
+
 @media (max-width: 805px) {
     ul {
         margin-top: 0;

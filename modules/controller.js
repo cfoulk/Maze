@@ -14,23 +14,26 @@ export let currentAlgorithm = null;
 export let bfsCompleted = false;
 export let dfsCompleted = false;
 export let dijkstraCompleted = false;
+
 export const wallsButton = document.querySelector("#walls-button");
 export const weightsButton = document.querySelector("#weights-button");
 export const startButton = document.querySelector("#start-button");
 export const endButton = document.querySelector("#end-button");
 export const resetMapButton = document.querySelector("#reset-button");
+
 export const bfsButton = document.querySelector("#bfs-button");
 export const dfsButton = document.querySelector("#dfs-button");
 export const dijkstrasButton = document.querySelector("#dijkstras-button");
+
+export const randomizeButton = document.querySelector("#randomize-button");
+export const recursiveBacktrack = document.querySelector("#recursive-backtrack");
+
 export const draggableDiagonostics = document.querySelector("#status");
 export const diagnosticsBtn = document.querySelector("#diagnosticsButton");
 
 export const navbarButton = document.querySelectorAll(".navbar-button");
 export const dropdownContent = document.querySelectorAll(".dropdown-content");
 let inDropdown = false;
-
-export const randomizeButton = document.querySelector("#randomize-button");
-export const recursiveBacktrack = document.querySelector("#recursive-backtrack");
 
 export const addStuff = (event) => {
     if (currentSetting == "WALL") {
@@ -277,6 +280,9 @@ const addWall = (x, y, event) => {
         grid[y][x].setEnd(false);
         end.x = undefined;
         end.y = undefined;
+    } else if (event.target.classList == "cell weight") {
+        event.target.classList.remove("weight");
+        grid[y][x].setWeight(1);
     }
     if (event.target.classList != "cell wall") {
         event.target.classList.add("wall");
@@ -321,15 +327,11 @@ const addWeight = (x, y, event) => {
     if (event.target.classList != "cell weight") {
         event.target.classList.add("weight");
         event.target.innerHTML = weightValue;
-        // grid[y][x].setWall(true);
         grid[y][x].setWeight(weightValue);
-        // grid[y][x].toString();
     } else {
         event.target.classList.remove("weight");
         event.target.innerHTML = "";
-        // grid[y][x].setWall(false);
         grid[y][x].setWeight(1); // default
-        // grid[y][x].toString();
     }
     // this is soooooooooooooooo ineffiecient but i dont know a better solution!
     updateStatus();

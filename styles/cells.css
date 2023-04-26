@@ -9,6 +9,7 @@
     cursor: default;
     font-size: .6vw;
 }
+
 @keyframes visitedAnimation {
   0%   {background-color: #845ec2;
   border: .1vw solid #845ec2;}
