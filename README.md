@@ -21,7 +21,7 @@
   <a href="#contact">Contact</a>
 </p>
 
-![demonstration](./public/demo.gif)
+https://user-images.githubusercontent.com/35832601/234759160-cdf368ba-6ce7-4633-ac07-b1479d5d57b5.mp4
 
 ## <a name="key-features">Key Features</a>
 
