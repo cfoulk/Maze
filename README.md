@@ -54,6 +54,9 @@ $ git clone https://github.com/cfoulk/Maze
 # enter new repository directory
 $ cd Maze
 
+# checkout which release you want, or just stay in main branch for the latest development
+$ git checkout release-1.1.0
+
 # open project with a local http server
 $ live-server .
 
