@@ -66,6 +66,6 @@ $ python3 -m http.server
 
 ## <a name="contact">Contact</a>
 
-**Email:** [charlesfoulk@csus.edu](mailto:charlesfoulk@csus.edu)
+**Email:** [charlesfoulk11@gmail.com](mailto:charlesfoulk11@gmail.com)
 
 **Github:** [@cfoulk](https://github.com/cfoulk)
